@@ -1,0 +1,127 @@
+<div class="container">
+  <h2 class="title">Price Filter</h2>
+
+  <form #priceForm="ngForm" (ngSubmit)="addPriceRange(priceForm)">
+    <div class="input-field">
+      <label for="filter-type">Filter type</label>
+      <select
+        name=""
+        id="filter-type"
+        (change)="onChangeFilterType($event.target.value)"
+      >
+        <option selected value="price-range">Price range</option>
+        <option value="greater-than">Greater than</option>
+        <option value="lower-than">Lower than</option>
+      </select>
+    </div>
+    <div *ngIf="filterType === 'price-range'" class="input-group">
+      <div class="input-field">
+        <label for="min-price">Min Price</label>
+        <input
+          id="min-price"
+          type="number"
+          placeholder="0"
+          name="minPrice"
+          [(ngModel)]="minPrice"
+          #minPriceField="ngModel"
+          required
+          min="0"
+        />
+        <div
+          class="error-message"
+          *ngIf="minPriceField.invalid && minPriceField.touched"
+        >
+          <small *ngIf="minPriceField.errors?.required"
+            >Min Price is required.</small
+          >
+        </div>
+      </div>
+
+      <div class="input-field">
+        <label for="max-price">Max Price</label>
+        <input
+          id="max-price"
+          type="number"
+          placeholder="1000"
+          name="maxPrice"
+          [(ngModel)]="maxPrice"
+          #maxPriceField="ngModel"
+          required
+          min="0"
+        />
+        <div
+          class="error-message"
+          *ngIf="maxPriceField.invalid && maxPriceField.touched"
+        >
+          <small *ngIf="maxPriceField.errors?.required"
+            >Max Price is required.</small
+          >
+        </div>
+      </div>
+    </div>
+    <div
+      style="margin-top: 24px; margin-bottom: 10px"
+      *ngIf="filterType === 'greater-than' || filterType === 'lower-than'"
+      class="input-field"
+    >
+      <label for="price">Price</label>
+      <input
+        id="price"
+        type="number"
+        placeholder="0"
+        name="minPrice"
+        [(ngModel)]="price"
+        #priceField="ngModel"
+        required
+        min="0"
+      />
+      <div
+        class="error-message"
+        *ngIf="priceField.invalid && priceField.touched"
+      >
+        <small *ngIf="priceField.errors?.required">Price is required.</small>
+      </div>
+    </div>
+    <button class="add-button" type="submit">
+      <fa-icon [icon]="faPlus"></fa-icon> Add Price Range
+    </button>
+  </form>
+
+  <div class="price-ranges">
+    <h3>Active Price Filters:</h3>
+    <div class="price-range">
+      <p *ngIf="tempPriceRanges.length === 0">No price filters added yet.</p>
+
+      <div class="item" *ngFor="let range of tempPriceRanges; let i = index">
+        @if (!range.min) {
+        <span>Nhỏ hơn {{ range.max | currencyFormatter }}</span>
+        } @if (!range.max) {
+        <span>Lớn hơn {{ range.min | currencyFormatter }}</span>
+        } @if (range.min && range.max) {
+        <span
+          >{{ range.min | currencyFormatter }} -
+          {{ range.max | currencyFormatter }}</span
+        >
+        }
+        <div class="cta-group">
+          <span (click)="movePriceRange(i, 'up')" [disabled]="i === 0">
+            <span><fa-icon [icon]="faArrowUp"></fa-icon></span>
+          </span>
+          <span
+            (click)="movePriceRange(i, 'down')"
+            [disabled]="i === tempPriceRanges.length - 1"
+          >
+            <span><fa-icon [icon]="faArrowDown"></fa-icon></span>
+          </span>
+          <button class="delete-button" (click)="deletePriceRange(i)">
+            <fa-icon [icon]="faTrash"></fa-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="confirm-group" *ngIf="pendingChanges">
+    <button class="cancel-btn" (click)="cancelChanges()">Cancel</button>
+    <button class="save-btn" (click)="saveChanges()">Save Changes</button>
+  </div>
+</div>

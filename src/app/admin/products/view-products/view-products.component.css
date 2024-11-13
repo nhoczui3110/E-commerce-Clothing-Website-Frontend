@@ -1,0 +1,15 @@
+.interract {
+  display: flex;
+  column-gap: 8px;
+  align-items: center;
+  justify-content: center;
+}
+
+.interract a:hover {
+  color: var(--primary-green);
+}
+
+.filter-wrapper {
+  display: flex;
+  column-gap: 16px;
+}

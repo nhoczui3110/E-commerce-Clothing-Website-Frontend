@@ -1,0 +1,110 @@
+.drop-shadow {
+  background: #000000AA;
+  display: flex;
+  z-index: 9999;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+.popup {
+  font-family: Calibri Light;
+  display: flex;
+  flex-direction: column;
+  padding: 32px;
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  width: clamp(400px, 40%, 600px);
+  height: 700px;
+  overflow-y: auto;
+}
+
+.popup::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: -1;
+  opacity: .08;
+  background-image: radial-gradient(#ffffff40, #fff0 40%), radial-gradient(hsl(44, 100%, 66%) 30%, hsl(338, 68%, 65%), hsla(338, 68%, 65%, .4) 41%, transparent 52%), radial-gradient(hsl(272, 100%, 60%) 37%, transparent 46%), linear-gradient(155deg, transparent 65%, hsl(142, 70%, 49%) 95%), linear-gradient(45deg, #0065e0, #0f8bff);
+  background-size: 200% 200%, 285% 500%, 285% 500%, cover, cover;
+  background-position: bottom left, 109% 68%, 109% 68%, center, center;
+}
+
+.popup::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: -2;
+  background: #fff;
+}
+
+.title {
+  height: 50px;
+  border-bottom: 1px solid #EEE;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-transform: uppercase;
+  color: var(--heavy-green);
+  font-weight: bold;
+  word-spacing: 5px;
+  font-size: 20px;
+}
+
+
+.popup .cropper-wrapper img,
+.popup .cropper-wrapper {
+  width: 80%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+}
+
+.popup__content {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.popup .cropper-wrapper img {
+  margin-top: 32px;
+  max-width: 256px;
+  max-height: 256px;
+  border-radius: 50%;
+}
+
+.nice-form-group {
+  margin-top: auto;
+}
+
+.btn {
+  margin-top: 32px;
+  margin-bottom: 16px;
+}
+
+.upload-img-btn {
+  cursor: pointer;
+  margin-top: 32px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 20px;
+  border-radius: 10px;
+  background-color: #fff;
+}
+
+.upload-img-btn:hover {
+  opacity: 0.8;
+}

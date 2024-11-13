@@ -1,0 +1,158 @@
+.cart-container {
+  margin-top: 64px;
+}
+
+.checkout-btn {
+  color: #fff;
+  margin-top: 41px;
+}
+
+.address-wrapper {
+  padding: 16px 0;
+  font-size: 1.8rem;
+}
+
+.address-wrapper-top {
+  display: flex;
+  justify-content: space-between;
+}
+
+.configure-address-btn {
+  cursor: pointer;
+  color: var(--primary-green);
+  padding: 8px;
+  border: 1px var(--primary-green) dotted;
+}
+
+.method-wrapper {
+  margin: 32px 0;
+}
+
+.text-wrapper {
+  margin: 16px 0;
+  display: flex;
+  column-gap: 16px;
+}
+
+.method-text {
+  cursor: pointer;
+  padding: 8px;
+  border: 1px var(--primary-green) solid;
+}
+
+.method-text:hover {
+  color: var(--primary-green);
+}
+
+.address-text {
+  font-weight: 600;
+  max-width: 700px;
+  line-height: 1.6;
+}
+
+.quantity-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  column-gap: 8px;
+}
+
+tbody tr {
+  position: relative;
+}
+
+
+.delete-btn-wrapper {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  top: 0;
+  width: 0;
+  background-color: var(--delete-red);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: width 0.5s ease-in-out;
+  cursor: pointer;
+}
+
+.delete-btn-wrapper fa-icon {
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+  color: white;
+}
+
+tbody tr:hover .delete-btn-wrapper {
+  width: 50px;
+  opacity: 1;
+}
+
+tbody tr:hover .delete-btn-wrapper fa-icon {
+  opacity: 1;
+}
+
+app-status {
+  margin-top: 32px;
+  display: block;
+}
+
+.address-wrapper-top__configure-address {
+  position: relative;
+}
+
+.configure-address__close-icon {
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-size: 3rem;
+  color: var(--primary-green);
+  font-weight: 700;
+}
+
+.rate__name {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  column-gap: 8px;
+}
+
+.total {
+  margin-top: 32px;
+  width: 383px;
+  /* font-size: 2.1rem;
+  font-weight: 600; */
+}
+
+.total__title {
+  font-weight: 700;
+  font-size: 3.6rem;
+}
+
+.total__info {
+  margin-top: 34px;
+}
+
+.total__info {
+  display: flex;
+  flex-direction: column;
+  row-gap: 17px;
+}
+
+.total__text {
+  display: flex;
+  flex-direction: column;
+  row-gap: 17px;
+}
+
+.total__text__content {
+  display: flex;
+
+}
+
+.total__number {
+  margin-left: auto;
+}
+
+.total__main__text {
+  font-weight: 700;
+}

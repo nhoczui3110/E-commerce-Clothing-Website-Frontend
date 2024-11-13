@@ -1,0 +1,177 @@
+@if (isFail) {
+<app-toast
+  [type]="'error'"
+  [title]="'Error'"
+  [message]="message"
+  [delay]="delay"
+></app-toast>
+} @if (isSuccess) {
+<app-toast
+  [type]="'success'"
+  [title]="'Success'"
+  [message]="message"
+  [delay]="delay"
+></app-toast>
+}
+<div class="signup-container">
+  <div class="screen">
+    <div class="screen__content">
+      <!-- Title added here -->
+      <form [formGroup]="form" class="signup" (ngSubmit)="onSubmit()">
+        <h2 class="signup__title title">Sign Up</h2>
+        <div class="signup__field last-name">
+          <div
+            *ngIf="
+              form.get('lastName')?.invalid && form.get('lastName')?.touched
+            "
+          >
+            <small
+              class="text-error"
+              *ngIf="form.get('lastName')?.errors?.required"
+              >Last Name is required.</small
+            >
+          </div>
+          <i class="signup__icon fas fa-user"></i>
+          <input
+            formControlName="lastName"
+            type="text"
+            class="signup__input"
+            placeholder="Last Name"
+          />
+        </div>
+        <div class="signup__field first-name">
+          <div
+            *ngIf="
+              form.get('firstName')?.invalid && form.get('firstName')?.touched
+            "
+          >
+            <small
+              class="text-error"
+              *ngIf="form.get('firstName')?.errors?.required"
+              >First Name is required.</small
+            >
+          </div>
+          <i class="signup__icon fas fa-user"></i>
+          <input
+            formControlName="firstName"
+            type="text"
+            class="signup__input"
+            placeholder="First Name"
+          />
+        </div>
+        <div class="signup__field email">
+          <div *ngIf="form.get('email')?.invalid && form.get('email')?.touched">
+            @if (form.get('email')?.errors?.required) {
+            <small class="text-error">Email is required.</small>
+            } @else if (form.get('email')?.errors?.email) {
+            <small class="text-error">Email không hợp lệ</small>
+            }
+          </div>
+          <i class="signup__icon fas fa-envelope"></i>
+          <input
+            formControlName="email"
+            type="email"
+            class="signup__input"
+            placeholder="Email"
+          />
+        </div>
+        <div class="signup__field password">
+          <div
+            *ngIf="
+              form.get('password')?.invalid && form.get('password')?.touched
+            "
+          >
+            @if (form.get('password')?.errors?.required) {
+            <small class="text-error">Password is required.</small>
+            } @else if (form.get('password')?.errors?.min) {
+            <small class="text-error">Password phải ít nhất 9 ký tự</small>
+            }
+          </div>
+          <i class="signup__icon fas fa-lock"></i>
+          <input
+            formControlName="password"
+            type="password"
+            class="signup__input"
+            placeholder="Password"
+          />
+        </div>
+
+        <div class="signup__field reset-password">
+          <div *ngIf="form.invalid && form.touched">
+            <small class="text-error" *ngIf="form.errors?.mismatch"
+              >Password không khớp.</small
+            >
+          </div>
+          <i class="signup__icon fas fa-lock"> </i>
+          <input
+            formControlName="confirmPassword"
+            type="password"
+            class="signup__input"
+            placeholder="Confirm password"
+          />
+        </div>
+        <div class="signup__field gender">
+          <div
+            *ngIf="form.get('gender')?.invalid && form.get('gender')?.touched"
+          >
+            @if (form.get('gender')?.errors?.required) {
+            <small class="text-error">Gender is required.</small>
+            }
+          </div>
+          <i class="signup__icon fas fa-phone"></i>
+          <select formControlName="gender" class="signup__input" name="" id="">
+            <option value="">Chọn giới tính</option>
+            <option value="0">Nam</option>
+            <option value="1">Nữ</option>
+          </select>
+        </div>
+        <div class="signup__field phone">
+          <div *ngIf="form.get('phone')?.invalid && form.get('phone')?.touched">
+            @if (form.get('phone')?.errors?.required) {
+            <small class="text-error">Phone is required.</small>
+            }
+          </div>
+          <i class="signup__icon fas fa-phone"></i>
+          <input
+            formControlName="phone"
+            type="tel"
+            class="signup__input"
+            placeholder="Phone"
+          />
+        </div>
+        <div class="signup__field birthday">
+          <div
+            *ngIf="
+              form.get('birthday')?.invalid && form.get('birthday')?.touched
+            "
+          >
+            @if (form.get('birthday')?.errors?.required) {
+            <small class="text-error">Birthday is required.</small>
+            }
+          </div>
+          <i class="signup__icon fas fa-phone"></i>
+          <input
+            formControlName="birthday"
+            type="date"
+            class="signup__input"
+            placeholder="Birthday"
+          />
+        </div>
+        <button
+          [disabled]="form.invalid"
+          type="submit"
+          class="button signup__submit sign-up-btn"
+        >
+          <span class="button__text">Sign Up Now</span>
+          <i class="button__icon fas fa-chevron-right"></i>
+        </button>
+      </form>
+    </div>
+    <div class="screen__background">
+      <span class="screen__background__shape screen__background__shape4"></span>
+      <span class="screen__background__shape screen__background__shape3"></span>
+      <span class="screen__background__shape screen__background__shape2"></span>
+      <span class="screen__background__shape screen__background__shape1"></span>
+    </div>
+  </div>
+</div>

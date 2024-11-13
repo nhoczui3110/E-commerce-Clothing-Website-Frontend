@@ -1,0 +1,107 @@
+<div class="drop-shadow">
+  @if (isFetching) {
+  <app-loading></app-loading>
+  }@else {
+  <div class="popup">
+    <title class="title">Thêm địa chỉ</title>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="form">
+        <div class="nice-form-group firstName">
+          <label for="firstName">First Name: </label>
+          <input formControlName="firstName" type="text" id="firstName" />
+          <small *ngIf="f.firstName.touched && f.firstName.invalid">
+            First name is required
+          </small>
+        </div>
+        <div class="nice-form-group lastName">
+          <label for="lastName">Last Name: </label>
+          <input formControlName="lastName" type="text" id="lastName" />
+          <small *ngIf="f.lastName.touched && f.lastName.invalid">
+            Last name is required
+          </small>
+        </div>
+
+        <!-- City FormGroup -->
+        <div class="nice-form-group city" formGroupName="city">
+          <label for="city">City: </label>
+          <input type="hidden" formControlName="id" />
+          <select
+            formControlName="name"
+            (change)="onChangeCity($event.target.value)"
+          >
+            <option value="">Chọn thành phố</option>
+            <option *ngFor="let city of cityList" [value]="city.name">
+              {{ city.name }}
+            </option>
+          </select>
+          <small *ngIf="f.city.touched && f.city.invalid">
+            City is required
+          </small>
+        </div>
+
+        <!-- District FormGroup -->
+        <div class="nice-form-group district" formGroupName="district">
+          <label for="district">District: </label>
+          <input type="hidden" formControlName="id" />
+          <select
+            formControlName="name"
+            (change)="onChangeDistrict($event.target.value)"
+          >
+            <option value="">Chọn quận, huyện</option>
+            <option
+              *ngFor="let district of districtList"
+              [value]="district.name"
+            >
+              {{ district.name }}
+            </option>
+          </select>
+          <small *ngIf="f.district.touched && f.district.invalid">
+            District is required
+          </small>
+        </div>
+
+        <!-- Ward FormGroup -->
+        <div class="nice-form-group ward" formGroupName="ward">
+          <label for="ward">Ward: </label>
+          <input type="hidden" formControlName="id" />
+          <select
+            formControlName="name"
+            (change)="onChangeWard($event.target.value)"
+          >
+            <option value="">Chọn huyện, xã</option>
+            <option *ngFor="let ward of wardList" [value]="ward.name">
+              {{ ward.name }}
+            </option>
+          </select>
+          <small *ngIf="f.ward.touched && f.ward.invalid">
+            Ward is required
+          </small>
+        </div>
+
+        <div class="nice-form-group street">
+          <label for="street">Street: </label>
+          <input formControlName="street" type="text" id="street" />
+          <small *ngIf="f.street.touched && f.street.invalid">
+            Street is required
+          </small>
+        </div>
+        <div class="nice-form-group phone">
+          <label for="tel">SĐT: </label>
+          <input formControlName="phone" type="text" id="tel" />
+          <small *ngIf="f.phone.touched && f.phone.invalid">
+            Phone is required
+          </small>
+        </div>
+        <div class="submit-btn">
+          <button type="submit" class="btn">Submit</button>
+        </div>
+        <div class="cancel-btn">
+          <button type="button" class="btn-trans" (click)="onCancel()">
+            Cancel
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+  }
+</div>

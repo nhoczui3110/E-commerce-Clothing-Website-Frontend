@@ -1,0 +1,42 @@
+<!-- <div class="product-container" (click)="onViewDetail()">
+  <div class="image-wrapper rounded-border-gradient">
+    <img
+      [src]="'http://localhost:3000/' + product.variants[0].imageUrl"
+      alt=""
+    />
+  </div>
+  <div class="category">{{ product.category.name }}</div>
+  <div class="name">{{ product.name }}</div>
+  <div class="price">{{ product.price | currencyFormatter }}</div>
+</div> -->
+
+<div class="card">
+  <div
+    class="image-container"
+    (mouseenter)="hoverImage(true, $event)"
+    (mouseleave)="hoverImage(false, $event)"
+  >
+    <img
+      [src]="'http://localhost:3000/' + product.variants[0].imageUrl"
+      alt="Product Name"
+      id="productImage"
+    />
+  </div>
+  <div class="card-content">
+    <span class="badge">{{ product.category.name }}</span>
+    <h3>{{ product.name }}</h3>
+    <div class="price-rating">
+      <span class="price">{{ product.price | currencyFormatter }}</span>
+      <div class="rating">
+        <span class="rating-text">{{ product["averageRating"] }}</span>
+        <span class="star">&#9733;</span>
+      </div>
+    </div>
+  </div>
+  <div class="card-footer">
+    <button class="add-to-cart" (click)="onViewDetail()">
+      <span class="cart-icon"><fa-icon [icon]="faCircleInfo"></fa-icon></span>
+      View detail product
+    </button>
+  </div>
+</div>

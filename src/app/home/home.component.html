@@ -1,0 +1,27 @@
+@if (isFetching) {
+<app-loading></app-loading>
+} @else {
+<app-hero-slider [slider]="slider"></app-hero-slider>
+<app-category [categories]="categories"></app-category>
+<app-slider
+  [title]="'Our most view products'"
+  [description]="
+    'Những sản phẩm đang tạo nên cơn sốt trong cộng đồng! Hãy xem các sản phẩm có lượt xem cao nhất, được yêu thích nhất và đánh giá tích cực từ khách hàng. Tìm kiếm sản phẩm phù hợp với bạn ngay hôm nay!'
+  "
+  [products]="views"
+></app-slider>
+<app-slider
+  [title]="'Our new products'"
+  [description]="
+    'Khám phá bộ sưu tập sản phẩm mới nhất của chúng tôi! Với thiết kế hiện đại và công nghệ tiên tiến, mỗi sản phẩm đều mang đến trải nghiệm tuyệt vời cho bạn. Đừng bỏ lỡ cơ hội sở hữu những sản phẩm hot nhất hiện nay!'
+  "
+  [products]="createdAt"
+></app-slider>
+<app-slider
+  [title]="'Our best rating products'"
+  [products]="averageRating"
+  [description]="
+    'Khám phá những sản phẩm nhận đánh giá cao nhất từ người tiêu dùng! Chúng tôi cam kết mang đến cho bạn chất lượng và hiệu suất vượt trội. Hãy tìm hiểu ngay để trải nghiệm những sản phẩm tốt nhất!'
+  "
+></app-slider>
+}

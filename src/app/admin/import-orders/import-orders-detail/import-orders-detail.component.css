@@ -1,0 +1,47 @@
+.form {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  grid-auto-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  gap: 0px 16px;
+  grid-auto-flow: row;
+  grid-template-areas:
+    "product product color color size size"
+    "quantity quantity quantity price price price"
+    "btn btn btn btn btn btn";
+  width: 100%;
+}
+
+.product {
+  grid-area: product;
+}
+
+.color {
+  grid-area: color;
+}
+
+.quantity {
+  grid-area: quantity;
+}
+
+.size {
+  grid-area: size;
+}
+
+.price {
+  grid-area: price;
+}
+
+.btn {
+  grid-area: btn;
+  margin-top: 16px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.status-selection {
+  max-width: 150px;
+  margin-bottom: 16px;
+}

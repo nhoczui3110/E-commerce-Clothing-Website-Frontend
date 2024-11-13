@@ -1,0 +1,318 @@
+@if (isFail) {
+<app-toast
+  [title]="Error"
+  [message]="message"
+  [delay]="delay"
+  [type]="'error'"
+></app-toast>
+} @if (isSuccess) {
+<app-toast
+  [title]="Success"
+  [message]="message"
+  [delay]="delay"
+  [type]="'success'"
+></app-toast>
+}
+<div *ngIf="!isFetching; else loading">
+  <div class="wrapper">
+    <div class="product-detail-container">
+      <div class="container product-detail-wrapper">
+        <div class="left-content">
+          <div class="image-wrapper">
+            <img
+              [src]="'http://localhost:3000/' + product.variants[0].imageUrl"
+              class="main-image"
+              alt=""
+              #mainImage
+            />
+            <div class="image-products-listing">
+              @for (item of product.variants; track $index) {
+              <img
+                [src]="'http://localhost:3000/' + item.imageUrl"
+                alt=""
+                (mouseenter)="
+                  onChangeImage('http://localhost:3000/' + item.imageUrl)
+                "
+              />
+              }
+            </div>
+          </div>
+          <div class="description">
+            <div class="description__text">Thông tin về sản phẩm</div>
+            <div class="description__content">
+              {{ product.description }}
+            </div>
+          </div>
+          <div class="customer-review">
+            <div class="review__text">Khách hàng đánh giá</div>
+            <div class="review__number">
+              {{ product.reviews.length }} Reviews
+            </div>
+            <div class="star-rating">
+              <!-- Hiển thị sao đầy -->
+              <span
+                *ngFor="let star of [].constructor(fullStars)"
+                class="star full"
+              >
+                &#9733;
+                <!-- Sao đầy -->
+              </span>
+
+              <!-- Hiển thị sao lẻ với gradient -->
+              <span
+                *ngIf="halfStar"
+                class="star half"
+                [ngStyle]="{
+                  background: halfStarGradient,
+                  '-webkit-background-clip': 'text',
+                  '-webkit-text-fill-color': 'transparent'
+                }"
+              >
+                &#9733;</span
+              >
+              <!-- Sao lẻ -->
+
+              <!-- Hiển thị sao trống -->
+              <span
+                *ngFor="let star of [].constructor(emptyStars)"
+                class="star empty"
+              >
+                &#9734;
+                <!-- Sao trống -->
+              </span>
+              <span style="font-size: 1.4rem">{{
+                "(" + product.reviews.length + ")"
+              }}</span>
+            </div>
+            <div class="star-list">
+              <div class="star-item">
+                <span class="star-item__number">5 Stars</span>
+                <div class="line-wrapper">
+                  <div class="line">
+                    <div
+                      class="filled-line"
+                      [style]="'width: ' + getRatingPercent(5) + '%'"
+                    ></div>
+                  </div>
+                  <div class="star-item__number-review">
+                    {{ getRatingNumber(5) }}
+                  </div>
+                </div>
+              </div>
+              <div class="star-item">
+                <span class="star-item__number">4 Stars</span>
+                <div class="line-wrapper">
+                  <div class="line">
+                    <div
+                      class="filled-line"
+                      [style]="'width: ' + getRatingPercent(4) + '%'"
+                    ></div>
+                  </div>
+                  <div class="star-item__number-review">
+                    {{ getRatingNumber(4) }}
+                  </div>
+                </div>
+              </div>
+              <div class="star-item">
+                <span class="star-item__number">3 Stars</span>
+                <div class="line-wrapper">
+                  <div class="line">
+                    <div
+                      class="filled-line"
+                      [style]="'width: ' + getRatingPercent(3) + '%'"
+                    ></div>
+                  </div>
+                  <div class="star-item__number-review">
+                    {{ getRatingNumber(3) }}
+                  </div>
+                </div>
+              </div>
+              <div class="star-item">
+                <span class="star-item__number">2 Stars</span>
+                <div class="line-wrapper">
+                  <div class="line">
+                    <div
+                      class="filled-line"
+                      [style]="'width: ' + getRatingPercent(2) + '%'"
+                    ></div>
+                  </div>
+                  <div class="star-item__number-review">
+                    {{ getRatingNumber(2) }}
+                  </div>
+                </div>
+              </div>
+              <div class="star-item">
+                <span class="star-item__number">1 Stars</span>
+                <div class="line-wrapper">
+                  <div class="line">
+                    <div
+                      class="filled-line"
+                      [style]="'width: ' + getRatingPercent(1) + '%'"
+                    ></div>
+                  </div>
+                  <div class="star-item__number-review">
+                    {{ getRatingNumber(1) }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="right-content">
+          <span class="name">{{ product.name }}</span>
+          <span class="category">{{ product.category.name }}</span>
+          <!-- product.component.html -->
+          <div class="star-rating">
+            <!-- Hiển thị sao đầy -->
+            <span
+              *ngFor="let star of [].constructor(fullStars)"
+              class="star full"
+            >
+              &#9733;
+              <!-- Sao đầy -->
+            </span>
+
+            <!-- Hiển thị sao lẻ với gradient -->
+            <span
+              *ngIf="halfStar"
+              class="star half"
+              [ngStyle]="{
+                background: halfStarGradient,
+                '-webkit-background-clip': 'text',
+                '-webkit-text-fill-color': 'transparent'
+              }"
+            >
+              &#9733;</span
+            >
+            <!-- Sao lẻ -->
+
+            <!-- Hiển thị sao trống -->
+            <span
+              *ngFor="let star of [].constructor(emptyStars)"
+              class="star empty"
+            >
+              &#9734;
+              <!-- Sao trống -->
+            </span>
+            <span style="font-size: 1.4rem">{{
+              "(" + product.reviews.length + ")"
+            }}</span>
+          </div>
+
+          <span class="price">{{ product.price | currencyFormatter }}</span>
+          <p class="desc">
+            {{ product.desc }}
+          </p>
+          <div class="color-container">
+            <span class="text">Màu sắc</span>
+            <div class="color-wrapper">
+              @for (item of product.variants; track $index) {
+              <div
+                #colorItem
+                class="color-item"
+                [ngClass]="{ active: $index === 0 }"
+                (click)="
+                  onChooseColor(
+                    'http://localhost:3000/' + item.imageUrl,
+                    colorItem
+                  )
+                "
+              >
+                <img [src]="'http://localhost:3000/' + item.imageUrl" alt="" />
+                <div class="color-text">{{ item.colorName }}</div>
+              </div>
+              }
+            </div>
+          </div>
+          <div class="size-wrapper">
+            <span class="text">Kích thước</span>
+
+            @for (item of sizeList; track $index) { @if (item.stock <= 0) {
+            <div class="size-item unactive">
+              {{ item.sizeName }}
+            </div>
+            } @else {
+            <div #sizeItem class="size-item" (click)="onChooseSize(sizeItem)">
+              {{ item.sizeName }}
+            </div>
+            }}
+          </div>
+          <div class="quantity-wrapper">
+            <span class="text">Số lượng</span>
+            <button class="btn quantity-btn" (click)="onDecreaseQuantity()">
+              -
+            </button>
+            <div style="margin: 0" class="nice-form-group">
+              <span class="quantity">{{ quantity }}</span>
+            </div>
+            <button class="btn quantity-btn" (click)="onIncreaseQuantity()">
+              +
+            </button>
+          </div>
+          <button
+            href="#"
+            class="btn add-to-cart-btn"
+            [ngClass]="{ unactive: !chosenColor || !chosenSize }"
+            (click)="onAddToCart()"
+          >
+            Add to cart
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <div class="comment-wrapper">
+        @for (review of product.reviews.slice(0, limitNumberReviews); track
+        $index) {
+        <div class="comment-item">
+          <div class="avatar">
+            <img [src]="'http://localhost:3000/' + review.user.avatar" alt="" />
+          </div>
+          <div class="comment__name">
+            {{ review.user.lastName + " " + review.user.firstName }}
+          </div>
+          <div class="star-rating">
+            <span
+              *ngFor="let star of [].constructor(review.rating)"
+              class="star full"
+            >
+              &#9733;
+              <!-- Sao đầy -->
+            </span>
+            <span
+              *ngFor="let star of [].constructor(5 - review.rating)"
+              class="star empty"
+            >
+              &#9734;
+              <!-- Sao đầy -->
+            </span>
+          </div>
+          <div class="comment__text">Nhận xét khách hàng</div>
+          <div class="comment__content">{{ "“" + review.comment + "”" }}”</div>
+        </div>
+        }
+      </div>
+      <button
+        *ngIf="limitNumberReviews < product.reviews.length"
+        class="btn load-review-btn"
+        type="button"
+        (click)="onIncreaseLimitNumberReviews()"
+      >
+        Hiển thị thêm
+      </button>
+      <app-slider
+        [products]="recommendationProducts"
+        [title]="'Có thể bạn thích'"
+        [description]="
+          'Chúng tôi đề xuất những sản phẩm dựa trên sở thích của bạn!'
+        "
+      ></app-slider>
+      <app-slider
+        [products]="similarProducts"
+        [title]="'Sản phẩm tương tự'"
+        [description]="'N hững sản phẩm tương tự với sản phẩm mà bạn đang xem'"
+      ></app-slider>
+    </div>
+  </div>
+</div>
+<ng-template #loading><app-loading></app-loading></ng-template>

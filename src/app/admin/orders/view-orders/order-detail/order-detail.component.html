@@ -1,0 +1,152 @@
+@if (isShowStatusError) {
+<app-status [title]="title" [message]="message" [status]="'error'"></app-status>
+} @if (isFail || isSuccess) {
+<app-toast
+  [title]="titleToast"
+  [message]="messageToast"
+  [delay]="delay"
+  [type]="type"
+></app-toast>
+} @if(isShowConfirmBox) {
+<app-confirm-box
+  (confirmEvent)="confirmEvent($event)"
+  [title]="isCancel ? cancelTitle : title"
+  [msg]="isCancel ? cancelMessage : msg"
+></app-confirm-box>
+} @if (isFetching) {
+<app-loading></app-loading>
+} @else if(!isFetching && !isShowStatusError) {
+<div class="cart-container" [ngClass]="{ container: role === 'Customer' }">
+  <div style="margin-bottom: 32px; font-size: 2.1rem; font-weight: 700">
+    Mã đơn hàng: {{ orderId }}
+  </div>
+  <div>
+    <table class="styled-table">
+      <thead>
+        <tr>
+          <th>Product</th>
+          <th>Color</th>
+          <th>Size</th>
+          <th>Image</th>
+          <th>Price</th>
+          <th class="quantity-header">Quantity</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (orderItem of order.orderItems; track $index) {
+        <tr>
+          <td>{{ orderItem.product.name }}</td>
+          <td>{{ orderItem.color }}</td>
+          <td>{{ orderItem.size }}</td>
+          <td>
+            <img
+              [src]="'http://localhost:3000/' + getImageUrl(orderItem)"
+              alt=""
+              style="width: 50px"
+            />
+          </td>
+          <td>{{ orderItem.price | currencyFormatter }}</td>
+          <td>{{ orderItem.quantity }}</td>
+          <td>
+            {{ orderItem.quantity * orderItem.price | currencyFormatter }}
+          </td>
+        </tr>
+        }
+      </tbody>
+    </table>
+    <div class="address-wrapper">
+      <div class="address-wrapper-top">
+        <span>Địa chỉ nhận hàng</span>
+      </div>
+      <div class="address-text">
+        {{
+          order.shippingAddress?.street +
+            ", " +
+            order.shippingAddress?.ward?.name +
+            ", " +
+            order.shippingAddress?.district?.name +
+            ", " +
+            order.shippingAddress?.city?.name +
+            ", " +
+            order.shippingAddress?.lastName +
+            " (" +
+            order.shippingAddress?.phone +
+            ")"
+        }}
+      </div>
+    </div>
+    <div class="content-wrapper">
+      <div>Phương thức thanh toán</div>
+      <div class="text-wrapper">
+        <span class="content-text">{{
+          order.payment?.paymentMethod?.toLowerCase() === "bycash"
+            ? "Thanh toán khi nhận hàng"
+            : "Thanh toán VNPAY"
+        }}</span>
+      </div>
+    </div>
+    <div class="content-wrapper">
+      <div>Trạng thái đơn hàng</div>
+      <div class="text-wrapper">
+        <span class="content-text">{{ order.status }}</span>
+      </div>
+    </div>
+    <div class="content-wrapper">
+      <div>Trạng thái thanh toán</div>
+      <div class="text-wrapper">
+        <span class="content-text"
+          >{{ order.isPaid ? "Đã thanh toán" : "Chưa thanh toán" }}
+        </span>
+      </div>
+    </div>
+    @if (order.payment.paidAt) {
+    <div class="content-wrapper">
+      <div>Ngày thanh toán</div>
+      <div class="text-wrapper">
+        <span class="content-text"
+          >{{ order.payment.paidAt | formatDate }}
+        </span>
+      </div>
+    </div>
+    }
+    <hr />
+    <div class="order-detail-wrapper">
+      <ul class="user-info">
+        <li>
+          Tên khách hàng: {{ order.user.lastName + " " + order.user.firstName }}
+        </li>
+        <li>Số điện thoại: {{ order.user.phone }}</li>
+        <li>Email: {{ order.user.email }}</li>
+      </ul>
+      <div class="total">
+        Total: <span>{{ order.totalCost | currencyFormatter }}</span>
+      </div>
+    </div>
+    @if(role==='Admin') { @if (order.status !== 'Delivered') {
+    <button
+      type="button"
+      class="btn"
+      style="display: block; width: 100%; margin-top: 32px"
+      (click)="onShowConfirmBox()"
+    >
+      {{ textButton }}
+    </button>
+    } @else {
+    <span class="success-order-text">
+      <fa-icon style="font-size: 2.6rem" [icon]="faCheckCircle"></fa-icon>Đơn
+      hàng đã hoàn thành</span
+    >
+    } @if (order.status === 'Waiting' || order.status === 'Pending') {
+    <button
+      type="button"
+      class="btn-trans"
+      style="display: block; width: 100%; margin-top: 32px"
+      (click)="onCancel()"
+    >
+      Cancel
+    </button>
+    } }
+  </div>
+</div>
+}

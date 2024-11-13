@@ -1,0 +1,25 @@
+<div class="hero-container">
+  <div class="content">
+    <div class="hero-list" #heroList>
+      @if (slider.list.length > 0) { @for (item of slider.list; track $index) {
+      <div class="hero-wrapper">
+        <div class="left-hero">
+          <h1 class="title">{{ item.title }}</h1>
+          <p class="desc">
+            {{ item.description }}
+          </p>
+          <a
+            [routerLink]="['/products', item.slug]"
+            style="color: #fff"
+            class="btn"
+            >Explore Product</a
+          >
+        </div>
+        <div class="right-hero">
+          <img [src]="'http://localhost:3000/' + item.imageUrl" alt="" />
+        </div>
+      </div>
+      } }
+    </div>
+  </div>
+</div>

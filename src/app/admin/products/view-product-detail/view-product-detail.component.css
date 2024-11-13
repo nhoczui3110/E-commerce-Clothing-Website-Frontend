@@ -1,0 +1,79 @@
+.submit {
+  margin-top: 32px;
+  display: block;
+  width: 100%;
+}
+
+.size-group .nice-form-group {
+  display: inline-block;
+}
+
+.size-group .nice-form-group {
+  margin-left: 16px;
+}
+
+.size-group .nice-form-group:first-of-type {
+  margin-left: 0;
+}
+
+.form-group-variants {
+  overflow-x: hidden;
+}
+
+.variant-controller {
+  transition: transform 0.3s ease;
+  display: flex;
+}
+
+.form-group-variant {
+  width: 100%;
+  flex-shrink: 0;
+}
+
+.add-variant-btn {
+  margin-top: 27px;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  width: fit-content;
+  padding: 0;
+}
+
+.add-variant-btn:hover {
+  opacity: 0.9;
+}
+
+.variant-name {
+
+  font-size: 2.1rem;
+  font-weight: 700;
+}
+
+.variant-top {
+  margin-top: 16px;
+  display: flex;
+  align-items: center;
+  column-gap: 8px;
+}
+
+.delete-variant {
+  cursor: pointer;
+}
+
+.delete-variant:hover {
+  opacity: 0.9;
+}
+
+.variant-top img {
+  width: 32px;
+  height: 32px;
+  background-color: #FF5C5C;
+  padding: 8px;
+  border-radius: 100%;
+  color: white
+}
+
+.text-error {
+  color: red;
+  margin-bottom: 8px !important;
+}

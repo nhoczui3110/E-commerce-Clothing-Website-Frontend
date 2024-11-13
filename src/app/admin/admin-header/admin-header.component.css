@@ -1,0 +1,37 @@
+.admin-header-container {
+  display: flex;
+  padding: 16px;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  column-gap: 16px;
+}
+
+.item {
+  position: relative;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+}
+
+.active,
+.item:hover {
+  background-color: var(--light-green);
+  color: var(--heavy-green);
+  cursor: pointer;
+}
+
+.item.active::before {
+  content: "";
+  display: inline-block;
+  position: absolute;
+  top: 0;
+  width: 30%;
+  height: 5px;
+  background-color: var(--heavy-green);
+  border-bottom-left-radius: 16px;
+  border-bottom-right-radius: 16px;
+}
+
+.item a {
+  display: inline-block;
+  padding: 16px 32px;
+}

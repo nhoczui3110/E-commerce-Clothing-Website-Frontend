@@ -1,0 +1,7 @@
+<ul class="admin-header-container">
+  @if (listFeature.length != 0) { @for (item of listFeature; track $index) {
+  <li class="item" routerLinkActive="active">
+    <a [routerLink]="item.featureUrl">{{ item.featureName }}</a>
+  </li>
+  } }
+</ul>

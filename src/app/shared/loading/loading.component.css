@@ -1,0 +1,25 @@
+.loader {
+  width: 48px;
+  height: 48px;
+  background: var(--light-green);
+  display: block;
+  animation: rotate 1s linear infinite;
+  margin: 0 auto
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg) scale(0.2);
+    border-radius: 10%;
+  }
+
+  50% {
+    transform: rotate(180deg) scale(1.5);
+    border-radius: 50%;
+  }
+
+  100% {
+    transform: rotate(360deg) scale(0.2);
+    border-radius: 10%;
+  }
+}

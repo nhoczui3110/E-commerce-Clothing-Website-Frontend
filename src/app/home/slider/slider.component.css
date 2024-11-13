@@ -1,0 +1,83 @@
+.slider-container {
+  padding-bottom: 150px;
+}
+
+.row-slider {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.title {
+  font-weight: 700;
+  font-size: 4.2rem;
+  color: var(--primary-black);
+}
+
+.desc {
+  margin-top: 18px;
+  font-family: "Manrope";
+  font-size: 1.8rem;
+  line-height: 3rem;
+  color: var(--primary-gray);
+  max-width: 470px;
+}
+
+.slider-list {
+  margin-top: 70px;
+  padding-bottom: 55px;
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+}
+
+.slider-container .item {
+  flex: 0 0 calc(33.33333333333% - 30px);
+  margin-right: 30px;
+  /* width: 33.33333%; */
+}
+
+.slider-list .item:last-child {
+  margin-right: 0;
+}
+
+.slider-container .image-wrapper {
+  width: 100%;
+  height: 310px;
+}
+
+.slider-container .image-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.category {
+  margin-top: 20px;
+  font-size: 1.4rem;
+  font-family: "Manrope";
+}
+
+.name {
+  margin-top: 4px;
+  font-size: 2rem;
+  font-family: "Manrope";
+  font-weight: 700;
+}
+
+.price {
+  display: block;
+  text-align: end;
+  margin-top: 12px;
+  font-size: 1.8rem;
+  font-family: "Manrope";
+  font-weight: 600;
+}
+
+.cta {
+  margin-top: 28px;
+  display: block;
+  text-align: center;
+  font-weight: 600;
+  font-size: 1.8rem;
+}

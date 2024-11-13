@@ -1,0 +1,432 @@
+@if (isShowOtpBox) {
+<app-otp-authentication
+  (otpEvent)="handleChangePassword($event)"
+></app-otp-authentication>
+} @if (isShowRating) {
+<app-rating
+  [data]="dataRating"
+  (rateEvent)="handleRatingProduct($event)"
+></app-rating>
+} @if(isFail) {
+<app-toast
+  [message]="message"
+  [title]="'Error'"
+  [delay]="delay"
+  [type]="'error'"
+></app-toast>
+} @if(isSuccess) {
+<app-toast
+  [message]="message"
+  [title]="'Success'"
+  [delay]="delay"
+  [type]="'success'"
+></app-toast>
+}
+<div class="profile-wrapper" #profileWrapper>
+  <div class="category-wrapper">
+    <div class="category-text text" style="padding-left: 48px">Danh mục</div>
+    <ul class="category-list">
+      <li
+        (click)="onShowProfile($event)"
+        #featureItem
+        style="background-color: var(--primary-green); color: #ffffff"
+      >
+        <span><fa-icon [icon]="faUser"></fa-icon></span> Hồ sơ
+      </li>
+      <li (click)="onShowAddress($event)" #featureItem>
+        <span><fa-icon [icon]="faLocation"></fa-icon></span> Địa chỉ
+      </li>
+      <li (click)="onShowChangePassword($event)" #featureItem>
+        <span><fa-icon [icon]="faLock"></fa-icon></span> Đổi mật khẩu
+      </li>
+      <li (click)="onShowOrders($event)" #featureItem>
+        <span><fa-icon [icon]="faCartShopping"></fa-icon></span>
+        Đơn mua
+      </li>
+      <li (click)="onShowRatingProduct($event)" #featureItem>
+        <span><fa-icon [icon]="faStar"></fa-icon></span>
+        Đánh giá sản phẩm
+      </li>
+    </ul>
+  </div>
+  <div class="info-wrapper">
+    <div class="welcome-wrapper" *ngIf="user">
+      <span style="font-weight: 500; font-size: 2.2rem"
+        >Welcome, {{ user.firstName }}</span
+      >
+      <span style="color: #ada7a7; font-size: 1.5rem">{{ formattedDate }}</span>
+    </div>
+    <div class="main-content-wrapper">
+      <div class="gradient-background"></div>
+      <div style="padding: 30px">
+        <div class="avatar-wrapper">
+          <div class="img-wrapper" (click)="onShowEditAvatar()">
+            @if (user && user['avatar']) {
+            <img [src]="'http://localhost:3000/' + user['avatar']" alt="" />
+            }
+          </div>
+          <div *ngIf="isShowImageCropper">
+            <app-image-cropper
+              (confirmEvent)="handleEditAvatar($event)"
+              [defaultImageSrc]="'http://localhost:3000/' + user['avatar']"
+            ></app-image-cropper>
+          </div>
+          <div class="avatar-wrapper__info">
+            @if (user) {
+            <span class="name-text">{{
+              user.lastName + " " + user.firstName
+            }}</span>
+            <span class="email-text">{{ user.email }}</span>
+            }
+          </div>
+        </div>
+        @switch (status) { @case ("info") {
+        <div class="info-text text-title">Thông tin cá nhân</div>
+        <form [formGroup]="form" (ngSubmit)="onSaveUser()" class="info">
+          <div class="nice-form-group">
+            <label>Họ: </label>
+            <input
+              type="text"
+              formControlName="lastName"
+              placeholder="Enter last name"
+            />
+            <small
+              *ngIf="
+                form.get('lastName')?.invalid && form.get('lastName')?.touched
+              "
+              >Họ là bắt buộc.</small
+            >
+          </div>
+
+          <div class="nice-form-group">
+            <label>Tên: </label>
+            <input
+              type="text"
+              formControlName="firstName"
+              placeholder="Enter first name"
+            />
+            <small
+              *ngIf="
+                form.get('firstName')?.invalid && form.get('firstName')?.touched
+              "
+              >Tên là bắt buộc.</small
+            >
+          </div>
+
+          <div class="nice-form-group phone">
+            <label>SDT: </label>
+            <input
+              type="tel"
+              formControlName="phone"
+              placeholder="Enter your phone"
+            />
+            <small
+              *ngIf="form.get('phone')?.invalid && form.get('phone')?.touched"
+              >Số điện thoại là bắt buộc.</small
+            >
+          </div>
+
+          <div class="nice-form-group">
+            <label>Gender: </label>
+            <select formControlName="gender">
+              <option value="">Chọn giới tính</option>
+              <option value="0">Nam</option>
+              <option value="1">Nữ</option>
+            </select>
+            <small
+              *ngIf="form.get('gender')?.invalid && form.get('gender')?.touched"
+              >Giới tính là bắt buộc.</small
+            >
+          </div>
+
+          <div class="nice-form-group">
+            <label>Birthday: </label>
+            <input
+              type="date"
+              formControlName="birthday"
+              placeholder="Enter your Birthday"
+              style="width: 100%"
+            />
+            <small
+              *ngIf="
+                form.get('birthday')?.invalid && form.get('birthday')?.touched
+              "
+              >Ngày sinh là bắt buộc.</small
+            >
+          </div>
+
+          <button class="btn submit" type="submit">Save</button>
+        </form>
+
+        } @case ("address") {
+        <app-address></app-address>
+        } @case ("order") {
+        <div class="info-text text-title">Quản lý đơn mua</div>
+        <ul class="status-wrapper">
+          <li class="status-item" (click)="onShowOrdersByStatus(null)">All</li>
+          <li class="status-item" (click)="onShowOrdersByStatus('Waiting')">
+            Waiting
+          </li>
+          <li class="status-item" (click)="onShowOrdersByStatus('Pending')">
+            Pending
+          </li>
+          <li class="status-item" (click)="onShowOrdersByStatus('Shipped')">
+            Shipped
+          </li>
+          <li class="status-item" (click)="onShowOrdersByStatus('Delivered')">
+            Delivered
+          </li>
+          <li class="status-item" (click)="onShowOrdersByStatus('Cancelled')">
+            Cancelled
+          </li>
+        </ul>
+
+        <ul class="product-list">
+          @for (order of orders; track $index) {
+          <li class="product-item">
+            <div class="product-item__data">
+              <div class="product-item--text">
+                <span class="text-gray">Trạng thái:</span>
+                <span>
+                  <p
+                    class="status"
+                    [ngClass]="{
+                      'status-pending': order.status === 'Pending',
+                      'status-paid': order.status === 'Delivered',
+                      'status-unpaid': order.status === 'Cancelled',
+                      'status-waiting': order.status === 'Waiting',
+                      'status-shipped': order.status === 'Shipped'
+                    }"
+                    style="padding: 8px; border-radius: 8px"
+                  >
+                    {{ order.status }}
+                  </p>
+                </span>
+              </div>
+              <div class="product-item--text">
+                <span class="text-gray">Ngày đặt:</span>
+                <span class="fw600">{{ order.orderDate | formatDate }}</span>
+              </div>
+              <div class="product-item--text">
+                <span class="text-gray">Ngày nhận:</span>
+                <span class="fw600">{{
+                  order.deliveryDate
+                    ? (order.deliveryDate | formatDate)
+                    : "Chưa giao"
+                }}</span>
+              </div>
+              <div class="product-item--text">
+                <span class="fw600">Mã đơn: {{ order._id }}</span>
+                <a
+                  target="_blank"
+                  [routerLink]="['/orders', order._id]"
+                  class="product-item-detail-btn"
+                  >Xem chi tiết
+                </a>
+              </div>
+            </div>
+
+            @for (orderItem of order.orderItems; track $index) {
+            <a
+              [routerLink]="['/products', orderItem.product.slug]"
+              class="product-item__top"
+            >
+              <img
+                [src]="'http://localhost:3000/' + orderItem.imageUrl"
+                alt=""
+              />
+              <div class="product-item__top__content">
+                <div class="product-item__name">
+                  {{ orderItem.product.name }}
+                </div>
+                <div class="product-item__color-price">
+                  <div class="product-item__text">
+                    Màu sắc: {{ orderItem.color }}
+                  </div>
+                  <div class="product-item__text">
+                    Giá:
+                    {{
+                      orderItem.price * orderItem.quantity | currencyFormatter
+                    }}
+                  </div>
+                </div>
+
+                <div class="product-item__text">
+                  Số lượng: {{ orderItem.quantity }}
+                </div>
+              </div>
+            </a>
+
+            <hr />
+
+            }
+            <div class="total-wrapper">
+              <div class="total__shipping-address">
+                Địa chỉ:
+                {{
+                  order.shippingAddress?.street +
+                    ", " +
+                    order.shippingAddress?.ward?.name +
+                    ", " +
+                    order.shippingAddress?.district?.name +
+                    ", " +
+                    order.shippingAddress?.city?.name +
+                    ", " +
+                    order.shippingAddress?.lastName +
+                    " (" +
+                    order.shippingAddress?.phone +
+                    ")"
+                }}
+              </div>
+              <div class="total__price">
+                <div class="fw600 total--shipping-fee">
+                  Phí giao hàng: {{ order.shippingFee | currencyFormatter }}
+                </div>
+                <div class="fw600 total--sub-total">
+                  Giá trị: {{ order.totalCost | currencyFormatter }}
+                </div>
+                <div class="fw600 total--main-total">
+                  Tổng cộng:
+                  {{ order.totalCost + order.shippingFee | currencyFormatter }}
+                </div>
+              </div>
+            </div>
+          </li>
+
+          }
+        </ul>
+        }@case ("rating-product") {
+        <div class="rating-wrapper">
+          <div class="status-wrapper">
+            <div
+              class="status-item"
+              (click)="onGetRatingProduct({ isRated: true })"
+            >
+              Sản phẩm đã đánh giá
+            </div>
+            <div
+              class="status-item"
+              (click)="onGetRatingProduct({ isRated: false })"
+            >
+              Sản phẩm chưa đánh giá
+            </div>
+          </div>
+          <ul class="rating-list">
+            @for (rating of ratings; track $index) {
+            <li class="rating-item">
+              <div class="img-wrapper">
+                <img
+                  [src]="
+                    'http://localhost:3000/' +
+                    rating.product.variants[0].imageUrl
+                  "
+                  alt=""
+                />
+              </div>
+              <div class="item__info">
+                <div class="fw600">{{ rating.product.name }}</div>
+                <div class="text-gray">{{ rating.product.category.name }}</div>
+              </div>
+              <div *ngIf="!rating.isRated">
+                <button
+                  class="btn-trans"
+                  (click)="onShowRating(rating.product._id)"
+                >
+                  Đánh giá ngay
+                </button>
+              </div>
+              <div *ngIf="rating.isRated">
+                <div style="margin-top: 16px">
+                  <ng-container
+                    *ngFor="
+                      let star of [].constructor(rating.rating);
+                      let i = index
+                    "
+                  >
+                    <span style="color: #ed8a19">&#9733;</span>
+                  </ng-container>
+                  <button class="btn" (click)="onEditRating(rating)">
+                    Thay đổi đánh giá
+                  </button>
+                </div>
+              </div>
+            </li>
+            }
+          </ul>
+        </div>
+        } @case ("change-password") {
+        <div class="text-title">Đổi mật khẩu</div>
+        <form
+          [formGroup]="formChangePassword"
+          (ngSubmit)="onSubmitChangePassword()"
+        >
+          <div class="nice-form-group">
+            <label for="password">Mật khẩu cũ: </label>
+            <input
+              formControlName="password"
+              id="password"
+              type="text"
+              placeholder="Nhập mật khẩu..."
+            />
+
+            <small
+              *ngIf="
+                formChangePassword.get('password')?.invalid &&
+                (formChangePassword.get('password')?.touched ||
+                  formChangePassword.get('password')?.dirty)
+              "
+              >Mật khẩu là bắt buộc và ít nhất 9 ký tự.</small
+            >
+          </div>
+          <div class="nice-form-group">
+            <label for="new-password">Mật khẩu mới</label>
+            <input
+              formControlName="newPassword"
+              id="new-password"
+              type="text"
+              placeholder="Nhập mật khẩu mới..."
+            />
+
+            <small
+              *ngIf="
+                formChangePassword.get('newPassword')?.invalid &&
+                (formChangePassword.get('newPassword')?.touched ||
+                  formChangePassword.get('newPassword')?.dirty)
+              "
+              >Mật khẩu mới là bắt buộc và ít nhất 9 ký tự.</small
+            >
+          </div>
+          <div class="nice-form-group">
+            <label for="confirm-password">Nhập lại mật khẩu mới:</label>
+            <input
+              formControlName="confirmPassword"
+              type="text"
+              placeholder="Xác nhận mật khẩu..."
+            />
+
+            >
+            <small
+              *ngIf="
+                formChangePassword.get('confirmPassword')?.errors
+                  ?.passwordMismatch &&
+                (formChangePassword.get('confirmPassword')?.touched ||
+                  formChangePassword.get('confirmPassword')?.dirty)
+              "
+              >Mật khẩu xác nhận không khớp.</small
+            >
+          </div>
+          <button type="submit" class="btn submit">Submit</button>
+        </form>
+        }}
+      </div>
+    </div>
+  </div>
+</div>
+@if (!isFetching && isShowStatus && status==='rating-product' && !isRated &&
+ratings?.length===0) {
+<app-status
+  [status]="'success'"
+  [title]="'Chúc mừng!'"
+  [message]="'Bạn đã đánh giá hết tất cả sản phẩm'"
+></app-status>
+}

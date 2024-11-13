@@ -1,0 +1,32 @@
+@if(products.length>0) {
+<div class="slider-container">
+  <div class="content">
+    <h2 class="title">{{ title }}</h2>
+    <div class="row-slider">
+      <p class="desc">
+        {{ description }}
+      </p>
+      <a href="#" class="btn-trans">Browse All</a>
+    </div>
+    <div class="slider-list">
+      @for (item of products; track $index) {
+      <div class="item">
+        <div class="image-wrapper">
+          <img
+            [src]="'http://localhost:3000/' + item.variants[0].imageUrl"
+            alt=""
+          />
+        </div>
+        <div class="category">{{ item.category.name }}</div>
+        <div class="name">{{ item.name }}</div>
+        <div class="name">{{ item.price | currencyFormatter }}</div>
+        <a [routerLink]="['/products', item.slug]" class="btn-trans cta"
+          >View product</a
+        >
+      </div>
+      }
+    </div>
+  </div>
+</div>
+
+}

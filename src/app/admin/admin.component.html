@@ -1,0 +1,37 @@
+<div class="admin-container">
+  <div class="menu-container">
+    <div class="logo-wrapper">
+      <div class="logo">Sedap</div>
+      <div class="slogan">Modern Admin Dashboard</div>
+    </div>
+    <ul class="feature-list">
+      <li class="feature-item" routerLinkActive="active">
+        <a routerLink="products" (click)="onChangeFeature('product')"
+          >Products</a
+        >
+      </li>
+      <li class="feature-item" routerLinkActive="active">
+        <a routerLink="category" (click)="onChangeFeature('category')"
+          >Category</a
+        >
+      </li>
+      <li class="feature-item" routerLinkActive="active">
+        <a routerLink="orders" (click)="onChangeFeature('order')">Orders</a>
+      </li>
+      <li class="feature-item" routerLinkActive="active">
+        <a routerLink="configuration" (click)="onChangeFeature('configuration')"
+          >Configuration</a
+        >
+      </li>
+      <li class="feature-item" routerLinkActive="active">
+        <a routerLink="import-orders" (click)="onChangeFeature('import-order')"
+          >Import Orders</a
+        >
+      </li>
+    </ul>
+  </div>
+  <div class="feature-content">
+    <app-admin-header [listFeature]="listFeature"></app-admin-header>
+    <router-outlet></router-outlet>
+  </div>
+</div>

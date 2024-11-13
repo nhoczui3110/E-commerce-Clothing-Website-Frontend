@@ -1,0 +1,73 @@
+.drop-shadow {
+  background: #000000AA;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+.popup {
+  font-family: Calibri Light;
+  display: flex;
+  flex-direction: column;
+  width: 400px;
+  height: 300px;
+  background: #FFFFFF;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.title {
+  height: 50px;
+  border-bottom: 1px solid #EEE;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-transform: uppercase;
+  color: var(--heavy-green);
+  font-weight: bold;
+  word-spacing: 5px;
+  font-size: 20px;
+}
+
+.body {
+  flex: 1;
+  color: #333;
+  text-align: center;
+}
+
+p {
+  font-size: 20px;
+}
+
+.buttons {
+  height: 70px;
+  display: flex;
+  background: var(--heavy-green);
+  justify-content: center;
+}
+
+.buttons button {
+  background: var(--heavy-green);
+  border: none;
+  color: #FFF;
+  font-size: 30px;
+  font-weight: bold;
+  text-transform: uppercase;
+  cursor: pointer;
+  width: 130px;
+}
+
+.buttons button:hover {
+  box-shadow: inset 0 100px 0 rgba(255, 255, 255, 0.1);
+}
+
+
+body {
+  background-size: auto;
+  background-image: url(https://cdn.wallpapersafari.com/86/40/bJ3UtF.jpg)
+}

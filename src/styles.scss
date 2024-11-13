@@ -1,0 +1,324 @@
+/* You can add global styles to this file, and also import other style files */
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --primary-green: #005D63;
+  --primary-yellow: #F1DEB4;
+  --primary-black: #131717;
+  --primary-gray: #566363;
+  --light-green: #d9f3ea;
+  --heavy-green: #00B074;
+  --delete-red: #D11A2A;
+  --header-height: 157px;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+
+body {
+  font-size: 1.6rem;
+  font-family: "RobotoSlab", sans-serif;
+}
+
+/* Common */
+a {
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+a:hover {
+  opacity: 0.9;
+}
+
+a:visited {
+  text-decoration: none;
+  color: inherit;
+
+}
+
+
+
+.btn {
+
+border-color: transparent;
+  display: inline-block;
+  padding: 19px 44px;
+  background-color: var(--primary-green);
+  font-family: "Manrope";
+  size: 2.1rem;
+  font-weight: 500;
+  color: #fff;
+  cursor: pointer;
+}
+
+.btn:hover {
+  opacity: 0.9;
+}
+
+.btn-trans {
+  display: inline-block;
+  padding: 21px 40px;
+  font-family: "Manrope";
+  size: 2.1rem;
+  font-weight: 500;
+  color: var(--primary-green);
+  cursor: pointer;
+  border: solid 1px var(--primary-green);
+  background-color: transparent;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+
+.btn-trans:hover,
+.btn-trans.active {
+  background-color: var(--primary-green);
+  color: #fff;
+}
+
+/* Đối với các trình duyệt dựa trên Webkit (Chrome, Safari) */
+::-webkit-scrollbar {
+  width: 8px;
+  /* Chiều rộng của thanh cuộn */
+  height: 8px;
+  /* Chiều cao của thanh cuộn ngang */
+}
+
+::-webkit-scrollbar-track {
+  background: var(--primary-yellow);
+  /* Màu nền track của thanh cuộn */
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--primary-black);
+  /* Màu gradient tương tự */
+  border-radius: 10px;
+  /* Tạo bo tròn */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-black)
+    /* Hiệu ứng khi hover */
+}
+/*
+.styled-table {
+  border-collapse: collapse;
+  margin: 25px 0;
+  font-size: 1.8rem;
+  font-family: sans-serif;
+  min-width: 400px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+  width: 100%;
+}
+
+.styled-table thead tr {
+  background-color: var(--primary-green);
+  color: #ffffff;
+  text-align: left;
+}
+
+.styled-table th,
+.styled-table td {
+  padding: 12px 15px;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.styled-table tbody tr {
+  border-bottom: 1px solid #dddddd;
+}
+
+.styled-table tbody tr:nth-of-type(even) {
+  background-color: #f3f3f3;
+}
+
+.styled-table tbody tr:last-of-type {
+  border-bottom: 2px solid var(--primary-green);
+}
+ */
+
+
+
+
+
+
+
+.quantity-column input {
+  width: 60px;
+}
+
+textarea {
+  resize: none;
+}
+
+.text-error {
+  color: red;
+  margin-bottom: 8px !important;
+}
+
+.submit {
+  margin-top: 32px;
+  display: block;
+  width: 100%;
+}
+
+.image-table-wrapper {
+  max-width: 50px;
+}
+
+.image-table-wrapper img {
+  width: 100%;
+}
+
+.interact {
+  display: inline-flex;
+  column-gap: 8px;
+  align-items: center;
+  justify-content: center;
+}
+
+.interact a:hover {
+  color: var(--primary-green);
+}
+
+hr {
+  color: black;
+  /* height: 5px; */
+  width: 100%;
+}
+
+
+// ===========================
+/*   color variables */
+/*   color variables */
+$clr-primary: #81d4fa;
+$clr-primary-light: #e1f5fe;
+$clr-primary-dark: #4fc3f7;
+$clr-gray100: #f9fbff;
+$clr-gray150: #f4f6fb;
+$clr-gray200: #eef1f6;
+$clr-gray300: #e1e5ee;
+$clr-gray400: #767b91;
+$clr-gray500: #4f546c;
+$clr-gray600: #2a324b;
+$clr-gray700: #161d34;
+$clr-pending: #fff0c2;
+$clr-pending-font: #a68b00;
+$clr-unpaid: #ffcdd2;
+$clr-unpaid-font: #c62828;
+$clr-paid: #c8e6c9;
+$clr-paid-font: #388e3c;
+$clr-waiting: 	#87a2c7;
+$clr-waiting-font: 	#3865a3;
+$clr-shipped: #FFCFB3;
+$clr-shipped-font: #E78F81;
+$clr-link: #2962ff;
+
+/*   border radius */
+$radius: 0.2rem;
+
+
+
+table {
+  border-collapse: collapse;
+  box-shadow: 0 5px 10px $clr-gray300;
+  background-color: white;
+  text-align: center;
+  overflow: hidden;
+  width: 100%;
+  thead {
+    box-shadow: 0 5px 10px $clr-gray300;
+  }
+
+  th {
+    padding: 1rem 2rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1rem;
+    font-size: 0.7rem;
+    font-weight: 900;
+  }
+
+  td {
+    padding: 1rem 2rem;
+    vertical-align: middle;
+  }
+
+  a {
+    text-decoration: none;
+    color: $clr-link;
+  }
+
+  // .status {
+  //   border-radius: $radius;
+  //   background-color: red;
+  //   padding: 1rem 1rem;
+  //   text-align: center;
+
+  //   &-pending {
+  //     background-color: $clr-pending;
+  //     color: $clr-pending-font;
+  //   }
+
+  //   &-paid {
+  //     background-color: $clr-paid;
+  //     color: $clr-paid-font;
+  //   }
+
+  //   &-unpaid {
+  //     background-color: $clr-unpaid;
+  //     color: $clr-unpaid-font;
+  //   }
+  //   &-waiting {
+  //     background-color: $clr-waiting;
+  //     color: $clr-waiting-font;
+  //   }
+  //   &-shipped {
+  //     background-color: $clr-shipped;
+  //     color: $clr-shipped-font;
+  //   }
+  // }
+
+  .amount {
+    text-align: right;
+  }
+
+  //Color alternating rows
+  tr:nth-child(even) {
+    background-color: $clr-gray150;
+  }
+}
+
+.status {
+  border-radius: $radius;
+  background-color: red;
+  padding: 1rem 1rem;
+  text-align: center;
+
+  &-pending {
+    background-color: $clr-pending;
+    color: $clr-pending-font;
+  }
+
+  &-paid {
+    background-color: $clr-paid;
+    color: $clr-paid-font;
+  }
+
+  &-unpaid {
+    background-color: $clr-unpaid;
+    color: $clr-unpaid-font;
+  }
+  &-waiting {
+    background-color: $clr-waiting;
+    color: $clr-waiting-font;
+  }
+  &-shipped {
+    background-color: $clr-shipped;
+    color: $clr-shipped-font;
+  }
+}
+

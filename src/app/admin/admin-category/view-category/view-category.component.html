@@ -1,0 +1,43 @@
+@if (showConfirmDeleteBox) {
+<app-confirm-box
+  (confirmEvent)="handleDeleteCategory($event)"
+></app-confirm-box>
+> } @if (stateDeleteCategory) {
+<app-toast
+  [type]="stateDeleteCategory"
+  [title]="title"
+  [message]="msg"
+  [delay]="delay"
+></app-toast>
+} @if (isFetching) {
+<app-loading></app-loading>
+} @else {
+<table class="styled-table">
+  <thead>
+    <tr>
+      <th>STT</th>
+      <th>Name</th>
+      <th>Slug</th>
+      <th>Interact</th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (category of categories; track $index) {
+    <tr>
+      <td>{{ $index + 1 }}</td>
+      <td>{{ category.name }}</td>
+      <td>{{ category.slug }}</td>
+      <td class="interact">
+        <a style="cursor: pointer" (click)="onDeleteCategory(category.slug)"
+          ><fa-icon [icon]="faTrash"></fa-icon
+        ></a>
+        <a [routerLink]="['./', category.slug]"
+          ><fa-icon [icon]="faEdit"></fa-icon
+        ></a>
+      </td>
+    </tr>
+    }
+  </tbody>
+</table>
+
+}

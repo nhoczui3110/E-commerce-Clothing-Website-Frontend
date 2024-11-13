@@ -1,0 +1,151 @@
+/* .slider-container {
+  max-width: 800px;
+  margin: 0 auto;
+} */
+
+.slider-container {
+  width: 100%;
+}
+
+.slider {
+  position: relative;
+  overflow: hidden;
+  border-radius: 10px;
+  height: 400px;
+  background-color: var(--primary-yellow);
+}
+
+.slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.5s ease-in-out;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.slide-active {
+  transform: translateX(0);
+}
+
+.slide-prev {
+  transform: translateX(-100%);
+}
+
+.slide-next {
+  transform: translateX(100%);
+}
+
+.slide-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  padding: 20px;
+  text-align: center;
+}
+
+.slide-title {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.slide-description {
+  font-size: 1.2rem;
+}
+
+.nav-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 10px;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.nav-prev {
+  left: 20px;
+}
+
+.nav-next {
+  right: 20px;
+}
+
+.manage-slides {
+  margin-top: 20px;
+}
+
+.manage-slides h3 {
+  font-size: 2.1rem;
+  font-weight: 600;
+  margin-bottom: 24px;
+}
+
+.slide-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f9f9f9;
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.slide-item-content {
+  display: flex;
+  align-items: center;
+}
+
+.thumbnail {
+  width: 60px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-right: 15px;
+}
+
+.remove-button {
+  background-color: #d11a2a;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 8px;
+}
+
+.add-slide {
+  margin-top: 20px;
+}
+
+.add-button {
+  background-color: #007bff;
+  border-radius: 8px;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  margin-bottom: 16px;
+}
+
+
+
+.submit-button {
+  margin-top: 16px;
+  max-height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+}

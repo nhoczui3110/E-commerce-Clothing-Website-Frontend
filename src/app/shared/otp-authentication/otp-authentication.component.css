@@ -1,0 +1,132 @@
+.drop-shadow {
+  background: #000000AA;
+  display: flex;
+  z-index: 9999;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+.popup {
+  font-family: Calibri Light;
+  display: flex;
+  flex-direction: column;
+  padding: 32px 96px;
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  overflow-y: auto;
+}
+
+.close-btn {
+  position: absolute;
+  top: 16px;
+  right: 24px;
+  font-size: 2.1rem;
+  cursor: pointer;
+}
+
+.popup::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: -1;
+  opacity: .08;
+  background-image: radial-gradient(#ffffff40, #fff0 40%), radial-gradient(hsl(44, 100%, 66%) 30%, hsl(338, 68%, 65%), hsla(338, 68%, 65%, .4) 41%, transparent 52%), radial-gradient(hsl(272, 100%, 60%) 37%, transparent 46%), linear-gradient(155deg, transparent 65%, hsl(142, 70%, 49%) 95%), linear-gradient(45deg, #0065e0, #0f8bff);
+  background-size: 200% 200%, 285% 500%, 285% 500%, cover, cover;
+  background-position: bottom left, 109% 68%, 109% 68%, center, center;
+}
+
+.popup::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: -2;
+  background: #fff;
+}
+
+.popup__content {
+  display: inline-flex;
+  flex-direction: column;
+  width: fit-content;
+  margin: 0 auto;
+}
+
+.inputs {
+  display: block;
+  width: fit-content;
+  margin: 0 auto;
+  margin-top: 55px;
+}
+
+.input {
+  width: 50px;
+  height: 50px;
+  border-radius: 8px;
+  border: none;
+  border: 1px solid #6d767d;
+  margin: 0 10px;
+  text-align: center;
+  font-size: 3.6rem;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.input:focus {
+  border-bottom: 1px solid var(--primary-green);
+  outline: none;
+}
+
+.input:nth-child(1) {
+  cursor: pointer;
+  pointer-events: all;
+}
+
+.title {
+  font-size: 2.6rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+.description {
+  margin-top: 8px;
+  font-size: 1.6rem;
+  color: #6d767d;
+  text-align: center;
+}
+
+.btn {
+  margin-top: 55px;
+  border-radius: 8px;
+}
+
+hr {
+  margin-top: 32px;
+}
+
+.text {
+  margin-top: 32px;
+  color: var(--primary-green);
+  font-weight: 600;
+  text-align: center;
+  font-size: 2rem;
+}
+
+.text {
+  cursor: pointer;
+}
+
+.close-btn:hover,
+.text:hover {
+  opacity: 0.8;
+}

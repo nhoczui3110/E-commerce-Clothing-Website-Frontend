@@ -1,0 +1,33 @@
+<div
+  id="toast"
+  *ngIf="showToast"
+  [@toastAnimation]="{ value: 'in', params: { fadeOutDuration: delay } }"
+>
+  <div
+    class="toast toast--success"
+    [ngClass]="{
+      'toast--success': type == 'success',
+      'toast--info': type == 'info',
+      'toast--warning': type == 'warning',
+      'toast--error': type == 'error'
+    }"
+  >
+    <div class="toast__icon">
+      <i
+        [ngClass]="{
+          'fas fa-check-circle': type == 'success',
+          'fas fa-info-circle': type == 'info',
+          'fas fa-exclamation-circle': type == 'warning',
+          'fas fa-exclamation-circle': type == 'error'
+        }"
+      ></i>
+    </div>
+    <div class="toast__body">
+      <h3 class="toast__title">{{ title }}</h3>
+      <p class="toast__msg">{{ message }}</p>
+    </div>
+    <div class="toast__close">
+      <i class="fas fa-times"></i>
+    </div>
+  </div>
+</div>

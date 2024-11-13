@@ -1,0 +1,75 @@
+@if (showConfirmDeleteBox) {
+<app-confirm-box (confirmEvent)="handleDeleteProduct($event)"></app-confirm-box>
+> } @if (stateDeleteProduct) {
+<app-toast
+  [type]="stateDeleteProduct"
+  [title]="title"
+  [message]="msg"
+  [delay]="delay"
+></app-toast>
+} @if (isFetching) {<app-loading></app-loading> }
+
+<div class="product-container">
+  <div class="nice-form-group">
+    <input
+      type="text"
+      name="search"
+      id="a"
+      placeholder="Tìm kiếm theo tên, mô tả"
+      (keyup)="onSearch($event.target.value)"
+    />
+  </div>
+  <div class="nice-form-group filter-wrapper">
+    <select name="" id="" (change)="onFilterChange($event)">
+      <option value="price-asc">Giá Tăng Dần</option>
+      <option value="price-desc">Giá Giảm Dần</option>
+      <option value="name-asc">Tên A - Z</option>
+      <option value="name-desc">Tên Z - A</option>
+    </select>
+    @if (categories) {
+    <select name="" id="" (change)="onCategoryChange($event)">
+      <option value="">Chọn category</option>
+      @for (category of categories; track $index) {
+      <option [value]="category.slug">{{ category.name }}</option>
+      }
+    </select>
+    }
+  </div>
+  <table class="styled-table">
+    <thead>
+      <tr>
+        <th>STT</th>
+        <th>Product</th>
+        <th>Slug</th>
+        <th>Category</th>
+        <th>Price</th>
+        <th>Interact</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (product of products; track $index) {
+      <tr>
+        <td>{{ $index + 1 }}</td>
+        <td>{{ product.name }}</td>
+        <td>{{ product.slug }}</td>
+        <td>{{ product.category.name }}</td>
+        <td>{{ product.price }}</td>
+        <td class="interact">
+          <a [routerLink]="['./', product.slug]"
+            ><fa-icon [icon]="faEye"></fa-icon
+          ></a>
+          <a style="cursor: pointer" (click)="onDeleteProduct(product.slug)"
+            ><fa-icon [icon]="faTrash"></fa-icon
+          ></a>
+          <a
+            [routerLink]="['./', product.slug]"
+            [queryParams]="{ isEdit: true }"
+            ><fa-icon [icon]="faEdit"></fa-icon
+          ></a>
+        </td>
+      </tr>
+      }
+    </tbody>
+  </table>
+  <app-pagination [pagination]="pagination"></app-pagination>
+</div>

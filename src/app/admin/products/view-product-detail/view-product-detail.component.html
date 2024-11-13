@@ -1,0 +1,281 @@
+@if (!isEdit) {
+<table class="styled-table">
+  <thead>
+    <tr>
+      <th>STT</th>
+      <th>Color</th>
+      <th>Size - Còn lại</th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (variant of product.variants; track $index) {
+    <tr>
+      <td>{{ $index + 1 }}</td>
+      <td>{{ variant.colorName }}</td>
+      <td>
+        @for (size of variant.size; track $index) {
+        <div [ngStyle]="{ 'margin-top': $index == 0 ? '0' : '8px' }">
+          {{ size.sizeName }} - {{ size.stock }}
+        </div>
+        }
+      </td>
+    </tr>
+    }
+  </tbody>
+</table>
+
+} @else if(productForm) {@if (stateAddProduct) {
+<app-toast
+  [type]="stateAddProduct"
+  [title]="title"
+  [message]="msg"
+  [delay]="delay"
+></app-toast
+>}
+<form action="#" [formGroup]="productForm" (ngSubmit)="onSubmit()">
+  <div class="nice-form-group">
+    <div
+      *ngIf="
+        productForm.get('name')?.invalid && productForm.get('name')?.touched
+      "
+    >
+      <small
+        class="text-error"
+        *ngIf="productForm.get('name')?.errors?.required"
+        >Name is required.</small
+      >
+    </div>
+    <label>Name: </label>
+    <input formControlName="name" type="text" placeholder="Enter name" />
+  </div>
+  <div class="nice-form-group">
+    <div
+      *ngIf="
+        productForm.get('slug')?.invalid && productForm.get('slug')?.touched
+      "
+    >
+      <small
+        class="text-error"
+        *ngIf="productForm.get('slug')?.errors?.required"
+        >Slug is required.</small
+      >
+      <small class="text-error" *ngIf="productForm.get('slug')?.errors?.pattern"
+        >Invalid slug format (only lowercase letters, numbers, and
+        hyphens).</small
+      >
+    </div>
+    <label>Slug: </label>
+    <input formControlName="slug" type="text" placeholder="Enter Slug" />
+    <small>Ex: ao-thun-den</small>
+  </div>
+  <div class="nice-form-group">
+    <div
+      *ngIf="
+        productForm.get('description')?.invalid &&
+        productForm.get('description')?.touched
+      "
+    >
+      <small class="text-error">Description is required.</small>
+    </div>
+    <label>Description: </label>
+    <textarea
+      formControlName="description"
+      rows="2"
+      value=""
+      placeholder="Enter description"
+    ></textarea>
+  </div>
+  <div class="nice-form-group">
+    <div
+      *ngIf="
+        productForm.get('category')?.invalid &&
+        productForm.get('category')?.touched
+      "
+    >
+      <small class="text-error">Category is required.</small>
+    </div>
+    <label>Category: </label>
+    <select formControlName="category">
+      <option selected>Please select a value</option>
+      @for (category of categories; track $index) {
+      <option [value]="category.slug">{{ category.name }}</option>
+      }
+    </select>
+  </div>
+  <div class="nice-form-group">
+    <div
+      *ngIf="
+        productForm.get('price')?.invalid && productForm.get('price')?.touched
+      "
+    >
+      <small
+        class="text-error"
+        *ngIf="productForm.get('price')?.errors?.required"
+        >Price is required.</small
+      >
+      <small class="text-error" *ngIf="productForm.get('price')?.errors?.min"
+        >Price must be a positive number.</small
+      >
+    </div>
+    <label>Price</label>
+    <input
+      formControlName="price"
+      type="number"
+      minlength="0"
+      placeholder="Enter price"
+    />
+  </div>
+  <div class="form-group-variants" formArrayName="variants">
+    <div style="margin-top: 16px">
+      @for (variant of variants.controls; track $index) {
+      <button
+        type="button"
+        class="btn-trans btn-change-variant"
+        [ngClass]="{ active: $index === 0 }"
+        (click)="onChangeVariant($index)"
+      >
+        {{ $index + 1 }}
+      </button>
+      }
+    </div>
+    <div class="variant-controller" #variantContainer>
+      @for (variant of variants.controls; track $index) {
+      <div [formGroupName]="$index" class="form-group-variant">
+        <div class="variant-top">
+          <div class="delete-variant" (click)="removeVariant($index)">
+            <img src="assets/icon/close.svg" alt="" srcset="" />
+          </div>
+          <div class="variant-name">Variant {{ $index + 1 }}</div>
+        </div>
+        <div class="nice-form-group">
+          <div
+            *ngIf="
+              variant.get('colorName')?.invalid &&
+              variant.get('colorName')?.touched
+            "
+          >
+            <small class="text-error">Color name is required.</small>
+          </div>
+          <label>Color name: </label>
+          <input
+            formControlName="colorName"
+            type="text"
+            placeholder="Enter name"
+          />
+          <small>Ex: Màu đen</small>
+        </div>
+
+        <fieldset class="nice-form-group size-group">
+          <label>Size:</label>
+
+          <!-- S size checkbox -->
+          <div class="nice-form-group">
+            <input
+              type="checkbox"
+              name="checkbox"
+              [id]="'check-' + $index + 'S'"
+              value="S"
+              (change)="onSizeChange($event, $index)"
+              [checked]="variant.get('size').value.includes('S')"
+            />
+            <label [for]="'check-' + i + 'S'">S</label>
+          </div>
+
+          <!-- M size checkbox -->
+          <div class="nice-form-group">
+            <input
+              type="checkbox"
+              name="checkbox"
+              [id]="'check-' + $index + 'M'"
+              value="M"
+              (change)="onSizeChange($event, $index)"
+              [checked]="variant.get('size').value.includes('M')"
+            />
+            <label [for]="'check-' + $index + 'M'">M</label>
+          </div>
+
+          <!-- L size checkbox -->
+          <div class="nice-form-group">
+            <input
+              type="checkbox"
+              name="checkbox"
+              [id]="'check-' + $index + 'L'"
+              value="L"
+              (change)="onSizeChange($event, $index)"
+              [checked]="variant.get('size').value.includes('L')"
+            />
+            <label [for]="'check-' + $index + 'L'">L</label>
+          </div>
+
+          <!-- XL size checkbox -->
+          <div class="nice-form-group">
+            <input
+              type="checkbox"
+              name="checkbox"
+              [id]="'check-' + $index + 'XL'"
+              value="XL"
+              (change)="onSizeChange($event, $index)"
+              [checked]="variant.get('size').value.includes('XL')"
+            />
+            <label [for]="'check-' + $index + 'XL'">XL</label>
+          </div>
+
+          <!-- XXL size checkbox -->
+          <div class="nice-form-group">
+            <input
+              type="checkbox"
+              name="checkbox"
+              [id]="'check-' + $index + 'XXL'"
+              value="XXL"
+              (change)="onSizeChange($event, $index)"
+              [checked]="variant.get('size').value.includes('XXL')"
+            />
+            <label [for]="'check-' + $index + 'XXL'">XXL</label>
+          </div>
+
+          <div
+            *ngIf="variant.get('size').invalid && variant.get('size').touched"
+          >
+            <small class="text-error">At least one size must be selected</small>
+          </div>
+        </fieldset>
+        <div class="nice-form-group">
+          <div
+            *ngIf="variant.get('img')?.invalid && variant.get('img')?.touched"
+          >
+            <small class="text-error">Image is required.</small>
+          </div>
+          <label>Image:</label>
+          <img
+            style="max-width: 10%"
+            [src]="'http://localhost:3000/' + variant.get('img').value"
+            alt=""
+            srcset=""
+          />
+
+          <input
+            type="file"
+            name="img"
+            (change)="onImageSelected($event, $index)"
+          />
+        </div>
+        <button type="button" class="add-variant-btn" (click)="addVariant()">
+          <img src="assets/icon/plus-icon.svg" alt="" srcset="" />
+        </button>
+        <div class="cta-group">
+          <button
+            type="submit"
+            class="btn submit"
+            [disabled]="productForm.invalid"
+            [ngStyle]="{ opacity: productForm.invalid ? 0.8 : 1 }"
+          >
+            Add
+          </button>
+        </div>
+      </div>
+
+      }
+    </div>
+  </div>
+</form>
+}

@@ -35,7 +35,12 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "src/assets/css/fonts.css",
+              "src/assets/css/reset.css",
+              "src/assets/css/grid.css",
+              "src/assets/css/responsive.css",
+              "src/styles.scss",
+              "node_modules/nice-forms.css/src/nice-forms.scss"
             ],
             "scripts": [],
             "server": "src/main.server.ts",
@@ -63,7 +68,9 @@
             "development": {
               "optimization": false,
               "extractLicenses": false,
-              "sourceMap": true
+              "sourceMap": true,
+              "ssr": false,
+              "prerender": false
             }
           },
           "defaultConfiguration": "production"

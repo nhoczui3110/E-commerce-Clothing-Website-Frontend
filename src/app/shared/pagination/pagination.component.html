@@ -1,0 +1,42 @@
+@if (pagination) {
+<ul class="pagination-wrapper">
+  <li>
+    <a (click)="navigateToPage(1)" class="btn"> Trang đầu </a>
+  </li>
+  @for (page of pageArray; track $index) {
+  <li>
+    <a
+      [ngClass]="{
+        'page-active': page === pagination['currentPage']
+      }"
+      (click)="navigateToPage(page)"
+      >{{ page }}</a
+    >
+  </li>
+  } @if(!(pageParam >= pagination['totalPages'] - 5)) {
+  <li>
+    <a>...</a>
+  </li>
+  } @if (pagination['totalPages'] >= 5) {
+  <li>
+    <a
+      [ngClass]="{
+        'page-active': pageParam === pagination['totalPages']
+      }"
+      (click)="navigateToPage(pagination['totalPages'])"
+      >{{ pagination["totalPages"] }}</a
+    >
+  </li>
+  }
+  <li>
+    <a
+      [routerLink]="[]"
+      [queryParams]="{ page: pagination['totalPages'] }"
+      class="btn"
+    >
+      Trang cuối
+    </a>
+  </li>
+</ul>
+
+}

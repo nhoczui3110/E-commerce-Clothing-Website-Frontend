@@ -1,0 +1,85 @@
+.hero-container {
+  background-color: var(--primary-yellow);
+  padding: 70px 0;
+  height: calc(100vh - var(--header-height));
+  display: flex;
+  align-items: center;
+
+}
+
+.content {
+  width: 80%;
+}
+
+.hero-list {
+  display: flex;
+  transition: all 0.5s ease;
+
+}
+
+.hero-wrapper {
+  display: flex;
+  flex: 0 0 100%;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.left-hero {
+  width: 40%;
+}
+
+.title {
+  font-weight: 700;
+  line-height: 68px;
+  color: var(--primary-black);
+  font-size: 5.8rem;
+}
+
+.desc {
+  margin-top: 20px;
+  font-size: 1.8rem;
+  line-height: 30px;
+  color: var(--primary-black);
+}
+
+.btn {
+  margin-top: 34px;
+}
+
+.right-hero {
+  width: 52%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+
+.right-hero img {
+  width: 100%;
+  height: clamp(100px, 600px, 70%);
+  object-fit: cover;
+}
+
+/* .content {
+  max-width: 100%;
+} */
+
+/* Màn hình nhỏ hơn */
+@media (max-width: 768px) {
+  .hero-wrapper {
+    flex-direction: column;
+  }
+
+  .title {
+    font-weight: 700;
+    line-height: 1.2;
+    font-size: 2.4rem;
+  }
+
+  .right-hero {
+    margin-top: 16px;
+  }
+}
+
+/* Màn hình rất nhỏ (di động) */
+@media (max-width: 480px) {}

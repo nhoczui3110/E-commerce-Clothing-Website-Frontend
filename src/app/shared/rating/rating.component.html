@@ -1,0 +1,68 @@
+<div class="drop-shadow">
+  <div class="popup">
+    <div class="popup__title">Give Feedback</div>
+    <div class="popup__message">
+      Bạn vui lòng đánh giá sản phẩm để chúng tôi cải thiện nhé!
+    </div>
+    <ul class="rating-list">
+      <li class="rating-item" (click)="onChooseRate(1, $event)">
+        <img
+          [style]="rating === 1 ? 'border: 4px solid #f5ebba' : ''"
+          class="emote"
+          src="../../../assets/icon/terible-emote.svg"
+          alt=""
+        />
+      </li>
+      <li class="rating-item" (click)="onChooseRate(2, $event)">
+        <img
+          [style]="rating === 2 ? 'border: 4px solid #f5ebba' : ''"
+          class="emote"
+          src="../../../assets/icon/bad-emote.svg"
+          alt=""
+        />
+      </li>
+      <li class="rating-item" (click)="onChooseRate(3, $event)">
+        <img
+          [style]="rating === 3 ? 'border: 4px solid #f5ebba' : ''"
+          class="emote"
+          src="../../../assets/icon/satisfied-emote.svg"
+          alt=""
+        />
+      </li>
+      <li class="rating-item" (click)="onChooseRate(4, $event)">
+        <img
+          [style]="rating === 4 ? 'border: 4px solid #f5ebba' : ''"
+          class="emote"
+          src="../../../assets/icon/happy-emote.svg"
+          alt=""
+        />
+      </li>
+      <li class="rating-item" (click)="onChooseRate(5, $event)">
+        <img
+          class="emote"
+          src="../../../assets/icon/very-happy-emote.svg"
+          alt=""
+          [style]="rating === 5 ? 'border: 4px solid #f5ebba' : ''"
+        />
+      </li>
+    </ul>
+    <div class="popup__comment">
+      <div class="nice-form-group">
+        <div class="popup__comment__message">Nhận xét sản phẩm:</div>
+        <input
+          [(ngModel)]="comment"
+          type="text"
+          class="popup__comment__input"
+        />
+      </div>
+    </div>
+    <div class="popup__btn-group">
+      <button class="popup__btn--submit btn" (click)="onSubmit()">
+        Submit
+      </button>
+      <button class="popup__btn--cancel btn-trans" (click)="onCancel()">
+        Cancel
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,148 @@
+<div class="slider-container">
+  <!-- <div class="slider">
+    <div
+      *ngFor="let slide of slides.list; let index = index"
+      [ngClass]="{
+        'slide-active': index === currentSlide,
+        'slide-prev':
+          index ===
+          (currentSlide - 1 + slides.list.length) % slides.list.length,
+        'slide-next': index === (currentSlide + 1) % slides.list.length
+      }"
+      class="slide"
+    >
+      <img
+        [src]="'http://localhost:3000/' + slide.imageUrl"
+        [alt]="slide.title"
+        class="slide-image"
+      />
+      <div class="overlay">
+        <h2 class="slide-title">{{ slide.title }}</h2>
+        <p class="slide-description">{{ slide.description }}</p>
+      </div>
+    </div>
+
+    <button (click)="prevSlide()" class="nav-button nav-prev">Previous</button>
+    <button (click)="nextSlide()" class="nav-button nav-next">Next</button>
+  </div> -->
+  <app-hero-slider [slider]="slides"></app-hero-slider>
+  <div class="manage-slides">
+    <h3>Manage Slides</h3>
+    <ul>
+      <li
+        *ngFor="let slide of slides.list; let index = index"
+        class="slide-item"
+      >
+        <div class="slide-item-content">
+          <img
+            [src]="'http://localhost:3000/' + slide.imageUrl"
+            [alt]="slide.title"
+            class="thumbnail"
+          />
+          <div>
+            <h4>{{ slide.title }}</h4>
+            <p>{{ slide.description }}</p>
+          </div>
+        </div>
+        <button (click)="removeSlide(index)" class="remove-button">
+          Remove
+        </button>
+      </li>
+    </ul>
+  </div>
+
+  <div class="add-slide">
+    <button (click)="showAddForm = !showAddForm" class="add-button">
+      {{ showAddForm ? "Cancel" : "Add New Slide" }}
+    </button>
+
+    <form
+      *ngIf="showAddForm"
+      (ngSubmit)="addSlide(addSlideForm)"
+      #addSlideForm="ngForm"
+    >
+      <h3>Add New Slide</h3>
+
+      <!-- Title Field -->
+      <div class="nice-form-group">
+        <label for="title">Title</label>
+        <input
+          type="text"
+          placeholder="Slide Title"
+          [(ngModel)]="newSlide.title"
+          name="title"
+          required
+          minlength="3"
+          maxlength="100"
+          id="title"
+          #title="ngModel"
+        />
+        <small *ngIf="title.invalid && title.touched" style="color: red">
+          Title is required (min 3 characters, max 100 characters)
+        </small>
+      </div>
+
+      <!-- Description Field -->
+      <div class="nice-form-group">
+        <label for="description">Description</label>
+        <textarea
+          placeholder="Slide Description"
+          [(ngModel)]="newSlide.description"
+          name="description"
+          required
+          minlength="10"
+          maxlength="300"
+          id="description"
+          #description="ngModel"
+        ></textarea>
+        <small
+          *ngIf="description.invalid && description.touched"
+          style="color: red"
+        >
+          Description is required (min 10 characters, max 300 characters)
+        </small>
+      </div>
+      <div class="nice-form-group">
+        <label for="slug">slug: </label>
+        <input
+          type="text"
+          placeholder="slug"
+          [(ngModel)]="newSlide.slug"
+          name="slug"
+          required
+          id="slug"
+          #slug="ngModel"
+        />
+        <small *ngIf="slug.invalid && slug.touched" style="color: red">
+          slug is required
+        </small>
+      </div>
+      <!-- Image Field -->
+      <div class="nice-form-group">
+        <label for="imageUrl">Image</label>
+        <input
+          #imageInput
+          type="file"
+          placeholder="Image URL"
+          (change)="onFileSelected($event)"
+          name="imageUrl"
+          required
+          id="imageUrl"
+          accept="image/*"
+        />
+        <small *ngIf="!selectedFile && imageUrl?.touched" style="color: red">
+          Image is required
+        </small>
+      </div>
+
+      <!-- Submit Button -->
+      <button
+        type="submit"
+        class="submit-button btn"
+        [disabled]="addSlideForm.invalid"
+      >
+        Add Slide
+      </button>
+    </form>
+  </div>
+</div>

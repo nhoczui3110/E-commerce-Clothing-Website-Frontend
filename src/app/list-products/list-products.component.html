@@ -1,0 +1,121 @@
+@if (isFetching) {
+<app-loading></app-loading>
+} @else {
+<div class="list-products-container">
+  <div class="content list-products-wrapper">
+    <div class="filter-wrapper">
+      <div class="text">Tất cả sản phẩm</div>
+      <div class="filter-wrapper">
+        <div class="filter-text">Category</div>
+        @for (category of categories; track $index) {
+        <div class="input-wrapper">
+          <input
+            type="checkbox"
+            [id]="'category-' + $index"
+            name="t-shirt"
+            id="t-shirt"
+            (change)="addTag($event, 'category')"
+          />
+          <label
+            [for]="'category-' + $index"
+            [attr.data-category]="category.slug"
+            >{{ category.name }}</label
+          >
+        </div>
+        }
+      </div>
+      <div class="filter-wrapper">
+        <div class="filter-text">Price</div>
+        @for (item of priceRanges; track $index) {
+        <div class="input-wrapper">
+          <input
+            type="checkbox"
+            [id]="'label' + $index"
+            (change)="addTag($event, 'price')"
+          />
+          @if (!item.min) {
+          <label [for]="'label' + $index" [attr.data-price]="[0, item.max]"
+            >Nhỏ hơn {{ item.max | currencyFormatter }}</label
+          >
+          } @if (!item.max) {
+          <label
+            [for]="'label' + $index"
+            [attr.data-price]="[item.min, infinitiveNumber]"
+            >Lớn hơn {{ item.min | currencyFormatter }}</label
+          >
+          } @if (item.min && item.max) {
+          <label
+            [for]="'label' + $index"
+            [attr.data-price]="[item.min, item.max]"
+            >{{ item.min | currencyFormatter }} -
+            {{ item.max | currencyFormatter }}</label
+          >
+          }
+        </div>
+        }
+      </div>
+      <div class="filter-wrapper">
+        <div class="filter-text">Sắp xếp</div>
+        <div class="input-wrapper">
+          <input
+            type="radio"
+            name="sort"
+            id="sort-by-name-order-asc"
+            (change)="onChangeSort('sort-by-name-order-asc')"
+          />
+          <label for="sort-by-name-order-asc">Sắp xếp theo tên A-Z</label>
+        </div>
+        <div class="input-wrapper">
+          <input
+            type="radio"
+            name="sort"
+            id="sort-by-name-order-desc"
+            (change)="onChangeSort('sort-by-name-order-desc')"
+          />
+          <label for="sort-by-name-order-desc">Sắp xếp theo tên Z-A</label>
+        </div>
+        <div class="input-wrapper">
+          <input
+            type="radio"
+            name="sort"
+            id="sort-by-price-order-asc"
+            (change)="onChangeSort('sort-by-price-order-asc')"
+          />
+          <label for="sort-by-price-order-asc">Giá tăng dần</label>
+        </div>
+        <div class="input-wrapper">
+          <input
+            type="radio"
+            name="sort"
+            id="sort-by-price-order-desc"
+            (change)="onChangeSort('sort-by-price-order-desc')"
+          />
+          <label for="sort-by-price-order-desc">Giá giảm dần</label>
+        </div>
+      </div>
+    </div>
+    <div class="container product-listing-wrapper">
+      <div class="tag-wrapper">
+        @for (price of priceList; track $index) {
+        <span class="tag" (click)="removeTag(price, 'price')">
+          {{ price.textContent }}</span
+        >
+        } @for (category of categoryList; track $index) {
+        <span class="tag" (click)="removeTag(category, 'category')">
+          {{ category.textContent }}</span
+        >
+        }
+      </div>
+      <div
+        class="row row-cols-xl-5 row-cols-md-3 row-cols-sm-2 product-listing"
+      >
+        @for (product of products; track $index) {
+        <app-product [product]="product"></app-product>
+        }
+      </div>
+      <app-pagination [pagination]="pagination"></app-pagination>
+    </div>
+  </div>
+</div>
+
+}

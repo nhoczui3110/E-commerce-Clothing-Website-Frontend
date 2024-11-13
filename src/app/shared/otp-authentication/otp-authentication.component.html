@@ -1,0 +1,30 @@
+<div class="drop-shadow">
+  <div class="popup">
+    <div class="close-btn" (click)="onClose()">
+      <fa-icon [icon]="faClose"></fa-icon>
+    </div>
+    <div class="title">Xác thực OTP</div>
+    <div class="description">Nhập mã OTP gồm 6 chữ số</div>
+    <div class="popup__content">
+      <div id="inputs" class="inputs">
+        <input
+          inputmode="numeric"
+          maxlength="1"
+          class="input"
+          #inputField
+          type="text"
+          (keyup)="onKeyUp($event)"
+          *ngFor="let field of [].constructor(6); let i = index"
+        />
+      </div>
+      <button class="btn" (click)="onSubmit()">Xác thực</button>
+    </div>
+    <hr />
+    <div class="text" *ngIf="canResendOtp" (click)="onResendOtp()">
+      Gửi lại mã OTP
+    </div>
+    <p class="text" *ngIf="!canResendOtp">
+      Vui lòng chờ {{ remainingTime }} giây nữa để gửi lại mã OTP.
+    </p>
+  </div>
+</div>

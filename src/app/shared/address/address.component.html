@@ -1,0 +1,97 @@
+@if(isShowFormAddress) {
+<app-form-add-new-address
+  (formSubmit)="handleFromAddress($event)"
+  [formData]="editAddress || null"
+></app-form-add-new-address>
+}@if(isFail) {
+<app-toast
+  [message]="message"
+  [title]="'Error'"
+  [delay]="delay"
+  type="'error'"
+></app-toast>
+} @if(isSuccess) {
+<app-toast
+  [message]="message"
+  [title]="'Success'"
+  [delay]="delay"
+  [type]="'success'"
+></app-toast>
+}
+<div class="container">
+  <div class="text-address">Địa chỉ mặc định</div>
+  @for (item of address; track $index) { @if (item.isDefault) {
+  <div class="address-block">
+    <div class="info">
+      <span class="profile-text">{{
+        item.firstName + " " + item.lastName
+      }}</span>
+      <span class="profile-text">{{ item.phone }}</span>
+      <div class="interact-group">
+        <a (click)="onUpdateAddress(item)" class="profile-text"
+          ><fa-icon [icon]="faEdit"></fa-icon
+        ></a>
+        <a class="profile-text" (click)="onDeleteAddress(item._id)"
+          ><fa-icon [icon]="faTrash"></fa-icon
+        ></a>
+      </div>
+    </div>
+    <div class="bottom">
+      <div class="text">
+        {{
+          item.street +
+            ", " +
+            item.ward.name +
+            ", " +
+            item.district.name +
+            ", " +
+            item.city.name
+        }}
+      </div>
+    </div>
+    <hr />
+  </div>
+  } }
+  <button class="btn btn-add-address" (click)="onShowAddressForm()">
+    Thêm địa chỉ mới
+  </button>
+  <div class="text-address">Địa chỉ khác</div>
+  @for (item of address; track $index) { @if (!item.isDefault) {
+  <div class="address-block">
+    <div class="info">
+      <span class="profile-text">{{
+        item.firstName + " " + item.lastName
+      }}</span>
+      <span class="profile-text">{{ item.phone }}</span>
+      <div class="interact-group">
+        <a class="profile-text" (click)="onUpdateAddress(item)"
+          ><fa-icon [icon]="faEdit"></fa-icon
+        ></a>
+        <a class="profile-text" (click)="onDeleteAddress(item._id)"
+          ><fa-icon [icon]="faTrash"></fa-icon
+        ></a>
+      </div>
+    </div>
+    <div class="bottom">
+      <div class="text">
+        {{
+          item.street +
+            ", " +
+            item.ward.name +
+            ", " +
+            item.district.name +
+            ", " +
+            item.city.name
+        }}
+      </div>
+      <button
+        class="btn-trans btn-set-default"
+        (click)="onSetDefaultAddress(item._id)"
+      >
+        Đặt mặc định
+      </button>
+    </div>
+    <hr />
+  </div>
+  } }
+</div>

@@ -1,0 +1,69 @@
+@if (stateAddCategory) {
+<app-toast
+  [type]="stateAddCategory"
+  [title]="title"
+  [message]="msg"
+  [delay]="delay"
+></app-toast
+>}
+
+<form [formGroup]="categoryForm" (ngSubmit)="onSubmit()">
+  <div class="nice-form-group">
+    <div
+      *ngIf="
+        categoryForm.get('name')?.invalid && categoryForm.get('name')?.touched
+      "
+    >
+      <small
+        class="text-error"
+        *ngIf="categoryForm.get('name')?.errors?.required"
+        >Name is required.</small
+      >
+    </div>
+    <label>Name: </label>
+    <input formControlName="name" type="text" placeholder="Enter Name" />
+  </div>
+  <div class="nice-form-group">
+    <div
+      *ngIf="
+        categoryForm.get('slug')?.invalid && categoryForm.get('slug')?.touched
+      "
+    >
+      <small
+        class="text-error"
+        *ngIf="categoryForm.get('slug')?.errors?.required"
+        >Slug is required.</small
+      >
+      <small
+        class="text-error"
+        *ngIf="categoryForm.get('slug')?.errors?.pattern"
+        >Invalid slug format (only lowercase letters, numbers, and
+        hyphens).</small
+      >
+    </div>
+    <label>Slug: </label>
+    <input formControlName="slug" type="text" placeholder="Enter Slug" />
+    <small>Ex: ao-thun</small>
+  </div>
+  <div class="nice-form-group">
+    <div
+      *ngIf="
+        categoryForm.get('img')?.invalid && categoryForm.get('img')?.touched
+      "
+    >
+      <small
+        class="text-error"
+        *ngIf="categoryForm.get('img')?.errors?.required"
+        >Image is required.</small
+      >
+    </div>
+    <label for="img">Hình ảnh</label>
+    <div *ngIf="category">
+      <img [src]="'http://localhost:3000/' + category.imageUrl" alt="" />
+    </div>
+    <input (change)="onFileSelected($event)" type="file" />
+  </div>
+  <div class="cta-group">
+    <button class="btn submit">Submit</button>
+  </div>
+</form>

@@ -1,0 +1,38 @@
+<div class="drop-shadow">
+  <div class="popup">
+    <div class="title">Thay đổi avatar</div>
+    <div style="font-size: 1.8rem; font-weight: 700; margin-top: 16px">
+      Xem trước
+    </div>
+    <div class="popup__content">
+      <div class="cropper-wrapper">
+        <img
+          [src]="defaultImageSrc"
+          *ngIf="!this.imageChangedEvent; else cropperImage"
+        />
+        <ng-template #cropperImage
+          ><image-cropper
+            [imageChangedEvent]="imageChangedEvent"
+            [maintainAspectRatio]="true"
+            [aspectRatio]="1 / 1"
+            format="png"
+            [roundCropper]="true"
+            (imageCropped)="imageCropped($event)"
+            (imageLoaded)="imageLoaded($event)"
+            (cropperReady)="cropperReady()"
+            (loadImageFailed)="loadImageFailed()"
+            [cropperStaticWidth]="256"
+            [cropperStaticHeight]="256"
+          ></image-cropper
+        ></ng-template>
+      </div>
+      <!-- <img [src]="croppedImage" /> -->
+      <label class="upload-img-btn" for="img"
+        ><fa-icon [icon]="faPlus"></fa-icon> Tải ảnh mới lên</label
+      >
+    </div>
+    <input hidden id="img" type="file" (change)="fileChangeEvent($event)" />
+    <button class="btn" (click)="onSave()">Save</button>
+    <button class="btn-trans" (click)="onCancel()">Cancel</button>
+  </div>
+</div>

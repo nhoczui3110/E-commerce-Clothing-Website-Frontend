@@ -1,0 +1,99 @@
+@if (isFetching) {
+<app-loading></app-loading>
+} @else {
+<div class="top-wrapper">
+  <div class="input-wrapper">
+    <div class="nice-form-group select-box">
+      <label for="filter">Sort by</label>
+      <select name="filter" id="filter" (change)="onFilterChange($event)">
+        <option value="deliveryDate-asc">Ngày nhận tăng dần</option>
+        <option value="deliveryDate-desc">Ngày nhận giảm dần</option>
+        <option value="orderDate-asc">Ngày đặt tăng dần</option>
+        <option value="orderDate-desc">Ngày đặt giảm dần</option>
+        <option value="totalCost-asc">Giá tăng dần</option>
+        <option value="totalCost-desc">Giá giảm dần</option>
+      </select>
+    </div>
+    <div class="nice-form-group status-selection">
+      <label for="status">Status</label
+      ><select
+        name="status"
+        id="status"
+        (change)="onChangeStatus($event.target.value)"
+        [value]="status"
+      >
+        <option value="">Chọn tất cả</option>
+        <option value="Delivered">Delivered</option>
+        <option value="Shipped">Shipped</option>
+        <option value="Pending">Pending</option>
+        <option value="Cancelled">Cancelled</option>
+        <option value="Waiting">Waiting</option>
+      </select>
+    </div>
+    <div class="nice-form-group">
+      <label for="from-date">Từ ngày</label
+      ><input
+        type="date"
+        id="from-date"
+        (change)="changeFromDate($event.target.value)"
+      />
+    </div>
+    <div class="nice-form-group">
+      <label for="to-date">Đến ngày</label
+      ><input
+        type="date"
+        id="to-date"
+        (change)="changeToDate($event.target.value)"
+      />
+    </div>
+  </div>
+</div>
+<table class="styled-table">
+  <thead>
+    <tr>
+      <th>Mã đơn</th>
+      <th>Ngày đặt hàng</th>
+      <th>Ngày giao hàng</th>
+      <th>Trạng thái</th>
+      <th>Đã thanh toán</th>
+      <th>Giá trị đơn hàng</th>
+      <th>Tương tác</th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (order of orders; track $index) {
+    <tr>
+      <td>{{ order._id }}</td>
+      <td>{{ order.orderDate | formatDate }}</td>
+      <td>{{ order.deliveryDate | formatDate }}</td>
+      <td>
+        <p
+          class="status"
+          [ngClass]="{
+            'status-pending': order.status === 'Pending',
+            'status-paid': order.status === 'Delivered',
+            'status-unpaid': order.status === 'Cancelled',
+            'status-waiting': order.status === 'Waiting',
+            'status-shipped': order.status === 'Shipped'
+          }"
+        >
+          {{ order.status }}
+        </p>
+      </td>
+      <td>
+        <fa-icon
+          [icon]="order.isPaid ? faCheck : faX"
+          [style.color]="
+            order.isPaid ? 'var(--heavy-green)' : 'var(--delete-red)'
+          "
+        ></fa-icon>
+      </td>
+      <td>{{ order.totalCost | currencyFormatter }}</td>
+      <td><a [routerLink]="['./', order._id]">Xem chi tiết</a></td>
+    </tr>
+    }
+  </tbody>
+</table>
+<app-pagination [pagination]="pagination"></app-pagination>
+
+}

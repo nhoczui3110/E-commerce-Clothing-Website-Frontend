@@ -1,0 +1,238 @@
+@if (isFail) {
+<app-toast
+  [type]="'error'"
+  [title]="'Error'"
+  [message]="message"
+  [delay]="delay"
+></app-toast>
+} @if (isSuccess) {
+<app-toast
+  [type]="'success'"
+  [title]="'Success'"
+  [message]="message"
+  [delay]="delay"
+></app-toast>
+}
+<div class="import-orders-wrapper">
+  @if (!isCreateNewOrder) {
+  <div class="top-wrapper">
+    <div class="input-wrapper">
+      <div class="nice-form-group select-box">
+        <label for="filter">Sort by</label>
+        <select name="filter" id="filter" (change)="onFilterChange($event)">
+          <option value="createdAt-asc">Ngày đặt tăng dần</option>
+          <option value="createdAt-desc">Ngày đặt giảm dần</option>
+          <option value="totalCost-asc">Giá tăng dần</option>
+          <option value="totalCost-desc">Giá giảm dần</option>
+        </select>
+      </div>
+      <div class="nice-form-group status-selection">
+        <label for="status">Status</label
+        ><select
+          name="status"
+          id="status"
+          (change)="onChangeStatus($event.target.value)"
+          [value]="status"
+        >
+          <option value="">Chọn tất cả</option>
+          <option value="Pending">Pending</option>
+          <option value="Complete">Shipped</option>
+          <option value="Complete">Delivered</option>
+          <option value="Cancelled">Cancelled</option>
+        </select>
+      </div>
+      <div class="nice-form-group">
+        <label for="from-date">Từ ngày</label
+        ><input
+          type="date"
+          id="from-date"
+          (change)="changeFromDate($event.target.value)"
+        />
+      </div>
+      <div class="nice-form-group">
+        <label for="to-date">Đến ngày</label
+        ><input
+          type="date"
+          id="to-date"
+          (change)="changeToDate($event.target.value)"
+        />
+      </div>
+    </div>
+    <div class="btn-wrapper">
+      <button class="btn-trans" (click)="onClickCreateOrder()">
+        Tạo đơn nhập mới
+      </button>
+    </div>
+  </div>
+  @if (isFetching) {
+  <app-loading></app-loading>
+  } @else {
+
+  <table class="styled-table">
+    <thead>
+      <tr>
+        <th>Mã đơn</th>
+        <th>Ngày đặt hàng</th>
+        <th>Ngày nhận hàng</th>
+        <th>Trạng thái</th>
+        <th>Giá trị đơn hàng</th>
+        <th>Tương tác</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (item of importOrders; track $index) {
+      <tr>
+        <td>{{ item._id }}</td>
+        <td>{{ item.createdAt | formatDate }}</td>
+        <td>{{ item.receivedAt | formatDate }}</td>
+        <td>
+          <p
+            class="status"
+            [ngClass]="{
+              'status-pending': item.status === 'Pending',
+              'status-paid': item.status === 'Complete',
+              'status-unpaid': item.status === 'Cancelled'
+            }"
+          >
+            {{ item.status }}
+          </p>
+        </td>
+        <td>{{ item.totalCost | currencyFormatter }}</td>
+        <td>
+          <a [routerLink]="['./', item._id]" style="cursor: pointer"
+            >Xem chi tiết</a
+          >
+        </td>
+      </tr>
+      }
+    </tbody>
+  </table>
+  }
+  <app-pagination [pagination]="pagination"></app-pagination>
+  } @else {
+  <div class="import-order-container">
+    <div>
+      <form
+        class="form"
+        [formGroup]="addOrderItemForm"
+        (ngSubmit)="onAddOrderItem()"
+      >
+        <div class="product nice-form-group">
+          <label for="product">Sản phẩm</label>
+          <select
+            formControlName="product"
+            name=""
+            id="product"
+            (change)="onChangeProduct($event.target.value, selectColor)"
+          >
+            <option value="">Chọn sản phẩm</option>
+            @for (product of products; track $index) {
+
+            <option [value]="product._id">{{ product.name }}</option>
+            }
+          </select>
+        </div>
+        <div class="color nice-form-group">
+          <label for="color">Màu sắc</label>
+          <select
+            #selectColor
+            formControlName="color"
+            name=""
+            id="color"
+            (change)="onChangeColor($event.target.value)"
+          >
+            <option value="">Chọn màu sắc</option>
+            @for (color of colors; track $index) {
+            <option [value]="color.colorName">{{ color.colorName }}</option>
+            }
+          </select>
+        </div>
+        <div class="size nice-form-group">
+          <label for="size">Số lượng</label>
+
+          <input formControlName="quantity" type="number" name="" id="size" />
+        </div>
+        <div class="quantity nice-form-group">
+          <label for="size">Size</label>
+          <select formControlName="size" name="" id="size">
+            <option value="">Chọn size</option>
+            @for (size of sizes; track $index) {
+            <option [value]="size.sizeName">{{ size.sizeName }}</option>
+            }
+          </select>
+        </div>
+        <div class="price nice-form-group">
+          <label for="price">Đơn giá</label>
+          <input formControlName="price" type="number" name="" id="price" />
+        </div>
+        <button [disabled]="addOrderItemForm.invalid" type="submit" class="btn">
+          Add to order
+        </button>
+      </form>
+      <hr />
+
+      <table class="styled-table">
+        <thead>
+          <tr>
+            <th>STT</th>
+            <th>Tên sản phẩm</th>
+            <th>Màu sắc</th>
+            <th>Hình ảnh</th>
+            <th>Size</th>
+            <th>Số lượng</th>
+            <th>Đơn giá</th>
+            <th>Total</th>
+            <th>Tương tác</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of orderItems; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>{{ findProductNameById(item.product) }}</td>
+            <td>{{ item.color }}</td>
+            <td>
+              <img
+                [src]="'http://localhost:3000/' + item.imageUrl"
+                alt=""
+                style="width: 50px"
+              />
+            </td>
+            <td>{{ item.size }}</td>
+            <td>{{ item.quantity }}</td>
+            <td>{{ item.price | currencyFormatter }}</td>
+            <td>
+              {{ item.price * item.quantity | currencyFormatter }}
+            </td>
+            <td>
+              <span
+                style="cursor: pointer"
+                (click)="onDeleteOrderItem(item.product, item.size, item.color)"
+              >
+                X
+              </span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <hr />
+      <div>
+        <span class="text"
+          >Total: {{ getTotalPrice() | currencyFormatter }}</span
+        >
+      </div>
+      <div class="cta-wrapper">
+        <button (click)="onSaveImportOrders()" class="btn" style="width: 100%">
+          Save
+        </button>
+        <button
+          (click)="onCancelCreateOrder()"
+          class="btn-trans"
+          style="margin-top: 8px; width: 100%"
+        >
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+  }
+</div>

@@ -1,0 +1,141 @@
+<div class="header-container">
+  <div class="content container">
+    <header>
+      <div class="menu-wrapper">
+        <img class="logo" src="../../assets/icon/cart.svg" alt="" />
+        <div class="mag-container">
+          <input
+            (input)="onSearchProducts($event.target.value)"
+            type="text"
+            placeholder="Search for anything"
+            (clickOutside)="clearProducts()"
+            appClickOutside
+          />
+          <div class="mag-wrapper">
+            <img class="mag-icon" src="../../assets/icon/mag.svg" alt="" />
+          </div>
+          <div
+            *ngIf="searchingProducts.length > 0"
+            class="product-list-wrapper"
+          >
+            <ul class="product-list">
+              @for (product of searchingProducts; track $index) {
+              <a [routerLink]="['/products', product.slug]">
+                <li class="product-item">
+                  <div class="product-item__left">
+                    <div class="product-item__image">
+                      <img
+                        [src]="
+                          'http://localhost:3000/' +
+                          product.variants[0].imageUrl
+                        "
+                        alt=""
+                      />
+                    </div>
+                    <span class="product-item__text">
+                      <span class="product-item__name">{{ product.name }}</span>
+                      <div class="product-item__category">
+                        {{ product.category.name }}
+                      </div>
+                    </span>
+                  </div>
+                  <div class="product-item__right">
+                    <span class="product-item__price">
+                      {{ product.price | currencyFormatter }}
+                    </span>
+                  </div>
+                </li>
+              </a>
+
+              }
+            </ul>
+          </div>
+        </div>
+        <div class="feature-wrapper">
+          <div class="user-wrapper">
+            <img src="../../assets/icon/user.svg" alt="" />
+            @if(isLogin) {
+            <ul class="sub-nav">
+              <li><a [routerLink]="['/profile']">Quản lý tài khoản</a></li>
+              <li (click)="onLogout()">Đăng xuất</li>
+            </ul>
+            } @else {
+            <ul class="sub-nav">
+              <li><a [routerLink]="['/login']">Đăng nhập</a></li>
+              <li><a [routerLink]="['/sign-up']">Đăng ký</a></li>
+            </ul>
+            }
+          </div>
+          <a class="cta-cart"
+            ><img class="cart-icon" src="../../assets/icon/cart.svg" alt="" />
+            <div *ngIf="cart.length > 0" class="cart-list-wrapper">
+              <ul class="cart-list">
+                @for (cartItem of cart; track $index) {
+                <a [routerLink]="['/products', cartItem.product.slug]">
+                  <li class="cart-item">
+                    <div class="cart-item__left">
+                      <div class="cart-item__image">
+                        <img
+                          [src]="
+                            'http://localhost:3000/' + getImageUrl(cartItem)
+                          "
+                          alt=""
+                        />
+                      </div>
+                      <span class="cart-item__text">
+                        <span class="cart-item__name">{{
+                          cartItem.product.name
+                        }}</span>
+                        <div class="cart-item__category">
+                          {{ cartItem.color }}
+                        </div>
+                      </span>
+                    </div>
+                    <div class="cart-item__right">
+                      <span class="cart-item__price">
+                        {{ cartItem.product.price | currencyFormatter }}
+                      </span>
+                    </div>
+                  </li>
+                </a>
+                }
+              </ul>
+              <hr style="opacity: 0.2" />
+              <div class="total-cart">
+                <div class="total-cart__quantity">
+                  {{ cart.length }} sản phẩm đã thêm vào giỏ hàng
+                </div>
+                <a
+                  [routerLink]="['/cart']"
+                  class="btn total-cart__view-cart-btn"
+                >
+                  Xem giỏ hàng
+                </a>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+      <nav class="header-nav">
+        <ul>
+          <li><a routerLink="/">Home</a></li>
+          <li>
+            Category
+            <ul class="sub-nav">
+              @for (item of categories; track $index) {
+              <li>
+                <a
+                  [routerLink]="['/products']"
+                  [queryParams]="{ category: item.slug }"
+                  >{{ item.name }}</a
+                >
+              </li>
+              }
+            </ul>
+          </li>
+          <li routerLink="/products">Products</li>
+        </ul>
+      </nav>
+    </header>
+  </div>
+</div>
